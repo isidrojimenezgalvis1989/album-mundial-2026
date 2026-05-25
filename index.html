@@ -133,7 +133,7 @@
 <div class="loading-screen" id="loadingScreen">
   <div class="spinner"></div>
   <h2>⚽ ÁLBUM MUNDIAL 2026</h2>
-  <p>Conectando con Firebase...</p>
+  <p id="loadingText">Conectando con Firebase...</p>
 </div>
 
 <header>
@@ -325,35 +325,77 @@ function initEmpty(){
   }));
 }
 function ensureData(){
+  // IMPORTANTE: solo crea entradas que no existen, NUNCA sobreescribe datos guardados
   GROUPS.forEach(g=>g.countries.forEach(c=>{
     if(!albumData[c.id])albumData[c.id]={};
     for(let i=1;i<=STICKERS_PER;i++){
-      if(!albumData[c.id][i])albumData[c.id][i]={state:0,name:c.players[i-1]||'',qty:0};
-      if(albumData[c.id][i].qty===undefined)albumData[c.id][i].qty=albumData[c.id][i].state===2?2:albumData[c.id][i].state;
-      if(!albumData[c.id][i].name&&c.players[i-1])albumData[c.id][i].name=c.players[i-1];
+      if(!albumData[c.id][i]){
+        // Solo crear si no existe
+        albumData[c.id][i]={state:0,name:c.players[i-1]||'',qty:0};
+      } else {
+        // Corregir qty si falta (migración de versiones anteriores)
+        if(albumData[c.id][i].qty===undefined||albumData[c.id][i].qty===null){
+          albumData[c.id][i].qty=albumData[c.id][i].state===2?2:albumData[c.id][i].state===1?1:0;
+        }
+        // Si el estado indica que tiene la lámina pero qty=0, corregir
+        if(albumData[c.id][i].state===1&&albumData[c.id][i].qty===0)albumData[c.id][i].qty=1;
+        if(albumData[c.id][i].state===2&&albumData[c.id][i].qty<2)albumData[c.id][i].qty=2;
+      }
     }
   }));
 }
 
 async function loadFromFirebase(){
   try{
+    document.getElementById('loadingText').textContent='Cargando datos del álbum...';
     const snap=await get(ref(db,'album'));
-    if(snap.exists()){albumData=snap.val();ensureData();}
-    else{initEmpty();await set(ref(db,'album'),albumData);}
+    if(snap.exists()){
+      albumData=snap.val();
+      ensureData();
+      console.log('✅ Datos cargados desde Firebase');
+    } else {
+      console.log('📭 Base de datos vacía — inicializando...');
+      initEmpty();
+      await set(ref(db,'album'),albumData);
+      console.log('✅ Datos iniciales guardados en Firebase');
+    }
     setSyncStatus('online','🔥 Guardado en Firebase');
     document.getElementById('loadingScreen').style.display='none';
     renderAll();
-    onValue(ref(db,'album'),(s)=>{if(s.exists()){albumData=s.val();ensureData();refreshAllCards();updateStats();}});
+    // Escuchar cambios en tiempo real (sin sobreescribir si somos nosotros los que escribimos)
+    onValue(ref(db,'album'),(s)=>{
+      if(s.exists()){
+        albumData=s.val();
+        ensureData();
+        refreshAllCards();
+        updateStats();
+      }
+    });
   }catch(e){
+    console.error('❌ Error Firebase:',e);
     setSyncStatus('offline','❌ Sin conexión — revisa reglas Firebase');
     document.getElementById('loadingScreen').style.display='none';
     initEmpty();renderAll();
+    showToast('⚠️ Sin conexión — ve a Firebase y publica las reglas true/true');
   }
 }
 
 async function saveSticker(cid,num){
-  try{setSyncStatus('syncing','⏳ Guardando...');await set(ref(db,`album/${cid}/${num}`),albumData[cid][num]);setSyncStatus('online','✅ Guardado en Firebase');}
-  catch(e){setSyncStatus('offline','❌ Error al guardar');}
+  try{
+    setSyncStatus('syncing','⏳ Guardando...');
+    const dataToSave={
+      state: albumData[cid][num].state||0,
+      name: albumData[cid][num].name||'',
+      qty: albumData[cid][num].qty||0
+    };
+    await set(ref(db,`album/${cid}/${num}`),dataToSave);
+    setSyncStatus('online','✅ Guardado en Firebase');
+    console.log(`💾 Guardado: ${cid} #${num}`,dataToSave);
+  }catch(e){
+    setSyncStatus('offline','❌ Error al guardar');
+    console.error('Error guardando:',e);
+    showToast('❌ Error al guardar. Revisa tu conexión a internet.');
+  }
 }
 
 function getCountryStats(cid){
