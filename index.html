@@ -53,9 +53,9 @@
   .mini-bar{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--green),#00bcd4);transition:width .5s;}
   .c-count{font-size:.73rem;font-weight:700;color:var(--gold);min-width:30px;text-align:right;}
   .toggle-arrow{font-size:.68rem;color:var(--muted);transition:transform .2s;}
-  .country-card.open .toggle-arrow{transform:rotate(180deg);}
-  .stickers-panel{display:none;padding:9px;grid-template-columns:repeat(4,1fr);gap:6px;}
-  .country-card.open .stickers-panel{display:grid;}
+  .country-card.closed .toggle-arrow{transform:rotate(180deg);}
+  .stickers-panel{display:grid;padding:9px;grid-template-columns:repeat(4,1fr);gap:6px;}
+  .country-card.closed .stickers-panel{display:none;}
   .sticker{background:var(--card2);border:2px solid rgba(255,255,255,.08);border-radius:9px;padding:6px 4px 4px;text-align:center;cursor:pointer;transition:all .15s;position:relative;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px;overflow:visible;}
   .sticker:hover{transform:scale(1.04);border-color:var(--gold);}
   .sticker.have{background:rgba(0,230,118,.12);border-color:rgba(0,230,118,.5);}
@@ -162,6 +162,7 @@
   <button class="filter-btn" data-filter="incomplete">Incompletos</button>
   <button class="filter-btn" data-filter="complete">Completos</button>
   <button class="filter-btn" data-filter="started">Iniciados</button>
+  <button class="filter-btn" id="toggleAllBtn" onclick="toggleAllCards()">🔼 Colapsar todo</button>
 </div>
 <div class="legend">
   <div class="legend-item"><div class="legend-dot ld-have"></div>Tengo</div>
@@ -530,15 +531,13 @@ function renderSticker(c,num){
   const cls=qty===0?(num===1||num===13?'special':''):qty===1?'have':'repeated';
   const badge=qty>=2?`×${qty}`:'';
   const dispName=d.name||c.players[num-1]||'---';
-  return`<div class="sticker ${cls}" id="stk-${c.id}-${num}">
+  return`<div class="sticker ${cls}" id="stk-${c.id}-${num}" onclick="cycleSticker('${c.id}',${num})">
     <span class="rep-badge">${badge}</span>
-    <div style="flex:1;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:2px" onclick="cycleSticker('${c.id}',${num})">
-      <span class="sticker-num">#${num}</span>
-      <span class="sticker-icon">${icon}</span>
-      <span class="sticker-name" title="${dispName}">${dispName}</span>
-    </div>
+    <span class="sticker-num">#${num}</span>
+    <span class="sticker-icon">${icon}</span>
+    <span class="sticker-name" title="${dispName}">${dispName}</span>
     <div class="sticker-actions">
-      <button onclick="openModal('${c.id}',${num})">✏️ editar</button>
+      <button onclick="event.stopPropagation();openModal('${c.id}',${num})">✏️ editar</button>
     </div>
   </div>`;
 }
@@ -549,6 +548,7 @@ function updateStickerEl(cid,num){
   const icon=qty===0?base:qty===1?'✅':'🔁';
   const cls=qty===0?(num===1||num===13?'special':''):qty===1?'have':'repeated';
   el.className='sticker '+cls;
+  el.onclick=function(){cycleSticker(cid,num);};
   el.querySelector('.sticker-icon').textContent=icon;
   el.querySelector('.sticker-name').textContent=d.name||(c?.players[num-1])||'---';
   const badge=el.querySelector('.rep-badge');
@@ -567,12 +567,25 @@ function updateCountryCard(cid){
 function refreshAllCards(){GROUPS.forEach(g=>g.countries.forEach(c=>{updateCountryCard(c.id);for(let i=1;i<=STICKERS_PER;i++)updateStickerEl(c.id,i);}));}
 
 window.cycleSticker=async function(cid,num){
-  const d=albumData[cid][num];d.qty=(d.qty??0)===0?1:0;d.state=d.qty>=2?2:d.qty===1?1:0;
+  const d=albumData[cid][num];
+  const prev=d.qty??0;
+  d.qty=prev===0?1:0;
+  d.state=d.qty>=2?2:d.qty===1?1:0;
   updateStickerEl(cid,num);updateCountryCard(cid);updateStats();
-  const n=d.name||'#'+num;showToast(d.qty===1?`✅ Tenida: ${n}`:`❌ Quitada: ${n} — usa ✏️ para repetidas`);
+  const n=d.name||'#'+num;
+  showToast(d.qty===1?`✅ Tenida: ${n}`:`❌ Quitada: ${n}`);
   await saveSticker(cid,num);
 };
-window.toggleCountry=function(cid){document.getElementById('cc-'+cid)?.classList.toggle('open');};
+window.toggleCountry=function(cid){document.getElementById('cc-'+cid)?.classList.toggle('closed');};
+let allCollapsed=false;
+window.toggleAllCards=function(){
+  allCollapsed=!allCollapsed;
+  document.querySelectorAll('.country-card').forEach(card=>{
+    if(allCollapsed)card.classList.add('closed');
+    else card.classList.remove('closed');
+  });
+  document.getElementById('toggleAllBtn').textContent=allCollapsed?'🔽 Expandir todo':'🔼 Colapsar todo';
+};
 window.openModal=function(cid,num){
   editTarget={cid,num};const c=getAllCountries().find(x=>x.id===cid);
   document.getElementById('modalCountry').textContent=c?.name||cid;
@@ -616,7 +629,6 @@ function applyFilter(){
       else if(activeFilter==='incomplete')cm=stats.have<STICKERS_PER;
       else if(activeFilter==='started')cm=stats.have>0&&stats.have<STICKERS_PER;
       const v=sm&&cm;card.classList.toggle('hidden',!v);if(v)gv=true;
-      if(q&&sm&&!c.name.toLowerCase().includes(q))card.classList.add('open');
     });
     const gs=document.getElementById('gs-'+g.id);if(gs)gs.classList.toggle('hidden-group',!gv);
   });
