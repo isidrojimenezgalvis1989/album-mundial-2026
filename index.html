@@ -54,21 +54,21 @@
   .c-count{font-size:.73rem;font-weight:700;color:var(--gold);min-width:30px;text-align:right;}
   .toggle-arrow{font-size:.68rem;color:var(--muted);transition:transform .2s;}
   .country-card.open .toggle-arrow{transform:rotate(180deg);}
-  .stickers-panel{display:none;padding:9px;grid-template-columns:repeat(5,1fr);gap:6px;}
+  .stickers-panel{display:none;padding:9px;grid-template-columns:repeat(4,1fr);gap:6px;}
   .country-card.open .stickers-panel{display:grid;}
-  .sticker{background:var(--card2);border:2px solid rgba(255,255,255,.08);border-radius:9px;padding:6px 3px;text-align:center;cursor:pointer;transition:all .15s;position:relative;min-height:76px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
-  .sticker:hover{transform:scale(1.06);border-color:var(--gold);}
+  .sticker{background:var(--card2);border:2px solid rgba(255,255,255,.08);border-radius:9px;padding:6px 4px 4px;text-align:center;cursor:pointer;transition:all .15s;position:relative;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px;overflow:visible;}
+  .sticker:hover{transform:scale(1.04);border-color:var(--gold);}
   .sticker.have{background:rgba(0,230,118,.12);border-color:rgba(0,230,118,.5);}
   .sticker.repeated{background:rgba(255,109,0,.12);border-color:rgba(255,109,0,.5);}
   .sticker.special{background:rgba(255,215,0,.06);border-color:rgba(255,215,0,.3);}
-  .sticker-num{font-size:.6rem;color:var(--muted);font-weight:700;}
-  .sticker-name{font-size:.52rem;color:var(--text);font-weight:600;line-height:1.2;text-align:center;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .sticker-icon{font-size:1rem;}
-  .rep-badge{position:absolute;top:-6px;right:-6px;background:var(--orange);color:#fff;border-radius:999px;font-size:.48rem;font-weight:900;min-width:17px;height:17px;display:none;align-items:center;justify-content:center;border:2px solid var(--dark);}
+  .sticker-num{font-size:.62rem;color:var(--muted);font-weight:700;line-height:1;}
+  .sticker-name{font-size:.55rem;color:var(--text);font-weight:600;line-height:1.2;text-align:center;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 2px;flex:1;}
+  .sticker-icon{font-size:1.1rem;line-height:1;}
+  .rep-badge{position:absolute;top:-6px;right:-6px;background:var(--orange);color:#fff;border-radius:999px;font-size:.48rem;font-weight:900;min-width:17px;height:17px;display:none;align-items:center;justify-content:center;border:2px solid var(--dark);z-index:2;}
   .sticker.repeated .rep-badge{display:flex;}
-  .sticker-actions{display:flex;gap:3px;margin-top:2px;}
-  .sticker-actions button{background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:5px;color:var(--muted);font-size:.52rem;padding:1px 4px;cursor:pointer;transition:all .15s;font-family:'Nunito';font-weight:700;}
-  .sticker-actions button:hover{background:rgba(255,215,0,.15);color:var(--gold);}
+  .sticker-actions{width:100%;display:flex;justify-content:center;margin-top:2px;}
+  .sticker-actions button{background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.25);border-radius:5px;color:var(--gold);font-size:.58rem;padding:2px 6px;cursor:pointer;transition:all .15s;font-family:'Nunito';font-weight:700;width:100%;}
+  .sticker-actions button:hover{background:var(--gold);color:#000;}
   .legend{display:flex;gap:10px;flex-wrap:wrap;padding:7px 14px;font-size:.7rem;color:var(--muted);border-top:1px solid rgba(255,255,255,.05);background:var(--dark);}
   .legend-item{display:flex;align-items:center;gap:4px;}
   .legend-dot{width:9px;height:9px;border-radius:3px;}
@@ -528,17 +528,32 @@ function renderSticker(c,num){
   const qty=d.qty??0;const base=getStickerBaseIcon(num);
   const icon=qty===0?base:qty===1?'✅':'🔁';
   const cls=qty===0?(num===1||num===13?'special':''):qty===1?'have':'repeated';
-  const badge=qty>=2?`×${qty}`:'';const dispName=d.name||c.players[num-1]||'---';
-  return`<div class="sticker ${cls}" id="stk-${c.id}-${num}" onclick="cycleSticker('${c.id}',${num})"><span class="rep-badge">${badge}</span><span class="sticker-num">#${num}</span><span class="sticker-icon">${icon}</span><span class="sticker-name" title="${dispName}">${dispName}</span><div class="sticker-actions" onclick="event.stopPropagation()"><button onclick="openModal('${c.id}',${num})">✏️</button></div></div>`;
+  const badge=qty>=2?`×${qty}`:'';
+  const dispName=d.name||c.players[num-1]||'---';
+  return`<div class="sticker ${cls}" id="stk-${c.id}-${num}">
+    <span class="rep-badge">${badge}</span>
+    <div style="flex:1;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:2px" onclick="cycleSticker('${c.id}',${num})">
+      <span class="sticker-num">#${num}</span>
+      <span class="sticker-icon">${icon}</span>
+      <span class="sticker-name" title="${dispName}">${dispName}</span>
+    </div>
+    <div class="sticker-actions">
+      <button onclick="openModal('${c.id}',${num})">✏️ editar</button>
+    </div>
+  </div>`;
 }
 function updateStickerEl(cid,num){
   const el=document.getElementById(`stk-${cid}-${num}`);if(!el)return;
   const c=getAllCountries().find(x=>x.id===cid);
   const d=albumData[cid]?.[num]??{qty:0,name:''};const qty=d.qty??0;const base=getStickerBaseIcon(num);
-  const icon=qty===0?base:qty===1?'✅':'🔁';const cls=qty===0?(num===1||num===13?'special':''):qty===1?'have':'repeated';
-  el.className='sticker '+cls;el.querySelector('.sticker-icon').textContent=icon;
+  const icon=qty===0?base:qty===1?'✅':'🔁';
+  const cls=qty===0?(num===1||num===13?'special':''):qty===1?'have':'repeated';
+  el.className='sticker '+cls;
+  el.querySelector('.sticker-icon').textContent=icon;
   el.querySelector('.sticker-name').textContent=d.name||(c?.players[num-1])||'---';
-  const badge=el.querySelector('.rep-badge');badge.textContent=qty>=2?`×${qty}`:'';badge.style.display=qty>=2?'flex':'none';
+  const badge=el.querySelector('.rep-badge');
+  badge.textContent=qty>=2?`×${qty}`:'';
+  badge.style.display=qty>=2?'flex':'none';
 }
 function updateCountryCard(cid){
   const c=getAllCountries().find(x=>x.id===cid);if(!c)return;
