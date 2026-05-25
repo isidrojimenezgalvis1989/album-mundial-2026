@@ -3,68 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⚽ Álbum Mundial 2026 Panini</title>
+<title>⚽ Álbum Mundial 2026 — Familia Jiménez Fonseca</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --gold:#FFD700;--gold2:#FFA500;--dark:#0a0a1a;--card:#13132a;
-    --card2:#1a1a35;--green:#00e676;--red:#ff1744;--blue:#2979ff;
-    --orange:#FF6D00;--text:#e8e8f0;--muted:#8888aa;--radius:14px;
-  }
+  :root{--gold:#FFD700;--gold2:#FFA500;--dark:#0a0a1a;--card:#13132a;--card2:#1a1a35;--green:#00e676;--red:#ff1744;--blue:#2979ff;--orange:#FF6D00;--text:#e8e8f0;--muted:#8888aa;--radius:14px;}
   *{box-sizing:border-box;margin:0;padding:0;}
   body{background:var(--dark);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;
-    background-image:radial-gradient(ellipse at 20% 0%,rgba(255,215,0,.08) 0%,transparent 60%),
-    radial-gradient(ellipse at 80% 100%,rgba(41,121,255,.08) 0%,transparent 60%);}
-  header{background:linear-gradient(135deg,#0a0a1a 0%,#1a1a35 50%,#0a0a1a 100%);
-    border-bottom:3px solid var(--gold);padding:12px 20px 8px;text-align:center;
-    position:sticky;top:0;z-index:100;box-shadow:0 4px 30px rgba(255,215,0,.15);}
-  header h1{font-family:'Bebas Neue',cursive;font-size:clamp(1.4rem,5vw,2.6rem);
-    background:linear-gradient(90deg,var(--gold),#fff,var(--gold2));
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px;line-height:1;}
-  .sync-status{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;margin-top:3px;
-    padding:3px 10px;border-radius:999px;background:rgba(0,230,118,.1);
-    border:1px solid rgba(0,230,118,.2);color:var(--green);}
+    background-image:radial-gradient(ellipse at 20% 0%,rgba(255,215,0,.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 100%,rgba(41,121,255,.08) 0%,transparent 60%);}
+  header{background:linear-gradient(135deg,#0a0a1a 0%,#1a1a35 50%,#0a0a1a 100%);border-bottom:3px solid var(--gold);padding:12px 20px 8px;text-align:center;position:sticky;top:0;z-index:100;box-shadow:0 4px 30px rgba(255,215,0,.15);}
+  header h1{font-family:'Bebas Neue',cursive;font-size:clamp(1.2rem,4.5vw,2.4rem);background:linear-gradient(90deg,var(--gold),#fff,var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px;line-height:1;}
+  header h2{font-family:'Bebas Neue',cursive;font-size:clamp(.9rem,3vw,1.4rem);color:var(--gold2);letter-spacing:3px;margin-top:2px;opacity:.85;}
+  .sync-status{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;margin-top:3px;padding:3px 10px;border-radius:999px;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.2);color:var(--green);}
   .sync-status.offline{background:rgba(255,23,68,.1);border-color:rgba(255,23,68,.2);color:var(--red);}
   .sync-status.syncing{background:rgba(255,215,0,.1);border-color:rgba(255,215,0,.2);color:var(--gold);}
   .dot{width:7px;height:7px;border-radius:50%;background:currentColor;}
-  .stats-bar{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;
-    padding:10px 14px;background:var(--card);border-bottom:1px solid rgba(255,215,0,.12);}
-  .stat-pill{background:var(--card2);border:1px solid rgba(255,215,0,.2);
-    border-radius:999px;padding:4px 12px;font-size:.78rem;display:flex;align-items:center;gap:5px;}
+  .stats-bar{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;padding:10px 14px;background:var(--card);border-bottom:1px solid rgba(255,215,0,.12);}
+  .stat-pill{background:var(--card2);border:1px solid rgba(255,215,0,.2);border-radius:999px;padding:5px 14px;font-size:.78rem;display:flex;align-items:center;gap:5px;cursor:pointer;transition:all .2s;user-select:none;}
+  .stat-pill:hover{border-color:var(--gold);background:rgba(255,215,0,.08);}
+  .stat-pill:active{transform:scale(.96);}
   .stat-pill span{font-weight:900;font-size:.9rem;}
-  .s-total{color:var(--gold);}.s-have{color:var(--green);}.s-miss{color:var(--red);}
-  .s-rep{color:var(--orange);}.s-pct{color:var(--blue);}
-  .controls{padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;
-    background:var(--dark);border-bottom:1px solid rgba(255,255,255,.05);}
+  .stat-hint{font-size:.58rem;color:var(--muted);display:block;text-align:center;padding:2px 0 6px;background:var(--card);}
+  .s-total{color:var(--gold);}.s-have{color:var(--green);}.s-miss{color:var(--red);}.s-rep{color:var(--orange);}.s-pct{color:var(--blue);}
+  .controls{padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;background:var(--dark);border-bottom:1px solid rgba(255,255,255,.05);}
   .search-wrap{flex:1;min-width:180px;position:relative;}
-  .search-wrap input{width:100%;background:var(--card);border:1.5px solid rgba(255,215,0,.25);
-    border-radius:999px;color:var(--text);font-family:'Nunito',sans-serif;
-    font-size:.88rem;padding:8px 14px 8px 36px;outline:none;transition:border-color .2s;}
+  .search-wrap input{width:100%;background:var(--card);border:1.5px solid rgba(255,215,0,.25);border-radius:999px;color:var(--text);font-family:'Nunito',sans-serif;font-size:.88rem;padding:8px 14px 8px 36px;outline:none;transition:border-color .2s;}
   .search-wrap input:focus{border-color:var(--gold);}
   .search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:.9rem;opacity:.5;}
-  .filter-btn{background:var(--card);border:1.5px solid rgba(255,255,255,.12);
-    border-radius:999px;color:var(--text);font-family:'Nunito',sans-serif;
-    font-size:.78rem;font-weight:700;padding:6px 13px;cursor:pointer;transition:all .2s;}
+  .filter-btn{background:var(--card);border:1.5px solid rgba(255,255,255,.12);border-radius:999px;color:var(--text);font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:700;padding:6px 13px;cursor:pointer;transition:all .2s;}
   .filter-btn.active,.filter-btn:hover{background:var(--gold);color:#000;border-color:var(--gold);}
   .group-section{margin:0;}
-  .group-header{display:flex;align-items:center;gap:10px;padding:10px 14px;
-    background:rgba(255,215,0,.06);border-top:2px solid rgba(255,215,0,.2);
-    border-bottom:1px solid rgba(255,215,0,.1);position:sticky;top:82px;z-index:50;}
-  .group-badge{font-family:'Bebas Neue';font-size:1.3rem;color:var(--gold);
-    background:rgba(255,215,0,.12);border:2px solid var(--gold);
-    border-radius:8px;padding:1px 10px;min-width:50px;text-align:center;}
+  .group-header{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,215,0,.06);border-top:2px solid rgba(255,215,0,.2);border-bottom:1px solid rgba(255,215,0,.1);position:sticky;top:96px;z-index:50;}
+  .group-badge{font-family:'Bebas Neue';font-size:1.3rem;color:var(--gold);background:rgba(255,215,0,.12);border:2px solid var(--gold);border-radius:8px;padding:1px 10px;min-width:50px;text-align:center;}
   .group-title{font-size:.82rem;color:var(--muted);}
   .group-title strong{color:var(--text);font-size:.85rem;}
   .group-stats{margin-left:auto;font-size:.76rem;color:var(--muted);}
-  .countries{padding:10px 14px;display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;}
-  .country-card{background:var(--card);border-radius:var(--radius);
-    border:1.5px solid rgba(255,255,255,.07);overflow:hidden;transition:transform .2s,box-shadow .2s;}
+  .countries{padding:10px 14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;}
+  .country-card{background:var(--card);border-radius:var(--radius);border:1.5px solid rgba(255,255,255,.07);overflow:hidden;transition:transform .2s,box-shadow .2s;}
   .country-card:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.4);}
   .country-card.complete{border-color:rgba(0,230,118,.4);}
   .country-card.hidden{display:none;}
-  .country-header{display:flex;align-items:center;justify-content:space-between;
-    padding:10px 12px;background:var(--card2);cursor:pointer;user-select:none;}
+  .country-header{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--card2);cursor:pointer;user-select:none;}
   .country-header:hover{background:rgba(255,215,0,.06);}
   .country-left{display:flex;align-items:center;gap:8px;}
   .country-flag{font-size:1.4rem;line-height:1;}
@@ -78,98 +56,103 @@
   .country-card.open .toggle-arrow{transform:rotate(180deg);}
   .stickers-panel{display:none;padding:9px;grid-template-columns:repeat(5,1fr);gap:6px;}
   .country-card.open .stickers-panel{display:grid;}
-  .sticker{background:var(--card2);border:2px solid rgba(255,255,255,.08);
-    border-radius:9px;padding:6px 3px;text-align:center;cursor:pointer;
-    transition:all .15s;position:relative;min-height:76px;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
+  .sticker{background:var(--card2);border:2px solid rgba(255,255,255,.08);border-radius:9px;padding:6px 3px;text-align:center;cursor:pointer;transition:all .15s;position:relative;min-height:76px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
   .sticker:hover{transform:scale(1.06);border-color:var(--gold);}
   .sticker.have{background:rgba(0,230,118,.12);border-color:rgba(0,230,118,.5);}
   .sticker.repeated{background:rgba(255,109,0,.12);border-color:rgba(255,109,0,.5);}
   .sticker.special{background:rgba(255,215,0,.06);border-color:rgba(255,215,0,.3);}
   .sticker-num{font-size:.6rem;color:var(--muted);font-weight:700;}
-  .sticker-name{font-size:.52rem;color:var(--text);font-weight:600;line-height:1.2;
-    text-align:center;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .sticker-name{font-size:.52rem;color:var(--text);font-weight:600;line-height:1.2;text-align:center;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .sticker-icon{font-size:1rem;}
-  .rep-badge{position:absolute;top:-6px;right:-6px;background:var(--orange);color:#fff;
-    border-radius:999px;font-size:.48rem;font-weight:900;min-width:17px;height:17px;
-    display:none;align-items:center;justify-content:center;border:2px solid var(--dark);}
+  .rep-badge{position:absolute;top:-6px;right:-6px;background:var(--orange);color:#fff;border-radius:999px;font-size:.48rem;font-weight:900;min-width:17px;height:17px;display:none;align-items:center;justify-content:center;border:2px solid var(--dark);}
   .sticker.repeated .rep-badge{display:flex;}
   .sticker-actions{display:flex;gap:3px;margin-top:2px;}
-  .sticker-actions button{background:transparent;border:1px solid rgba(255,255,255,.12);
-    border-radius:5px;color:var(--muted);font-size:.52rem;
-    padding:1px 4px;cursor:pointer;transition:all .15s;font-family:'Nunito';font-weight:700;}
+  .sticker-actions button{background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:5px;color:var(--muted);font-size:.52rem;padding:1px 4px;cursor:pointer;transition:all .15s;font-family:'Nunito';font-weight:700;}
   .sticker-actions button:hover{background:rgba(255,215,0,.15);color:var(--gold);}
-  .legend{display:flex;gap:10px;flex-wrap:wrap;padding:7px 14px;
-    font-size:.7rem;color:var(--muted);border-top:1px solid rgba(255,255,255,.05);background:var(--dark);}
+  .legend{display:flex;gap:10px;flex-wrap:wrap;padding:7px 14px;font-size:.7rem;color:var(--muted);border-top:1px solid rgba(255,255,255,.05);background:var(--dark);}
   .legend-item{display:flex;align-items:center;gap:4px;}
   .legend-dot{width:9px;height:9px;border-radius:3px;}
   .ld-have{background:rgba(0,230,118,.5);border:1px solid var(--green);}
   .ld-rep{background:rgba(255,109,0,.5);border:1px solid var(--orange);}
   .ld-miss{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);}
-  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);
-    z-index:200;align-items:center;justify-content:center;}
+
+  /* PANEL REPORTE */
+  .report-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:300;align-items:flex-start;justify-content:center;padding:20px 10px;overflow-y:auto;}
+  .report-overlay.show{display:flex;}
+  .report-panel{background:var(--card);border:2px solid var(--gold);border-radius:18px;width:100%;max-width:600px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.7);margin:auto;}
+  .report-header{padding:16px 18px 12px;border-bottom:1px solid rgba(255,215,0,.2);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+  .report-header h3{font-family:'Bebas Neue';font-size:1.3rem;color:var(--gold);}
+  .report-header .r-count{font-size:.8rem;color:var(--muted);margin-top:2px;}
+  .report-close{background:var(--card2);border:1px solid rgba(255,255,255,.15);border-radius:8px;color:var(--text);font-size:.85rem;font-weight:700;padding:6px 12px;cursor:pointer;font-family:'Nunito';}
+  .report-close:hover{background:var(--red);border-color:var(--red);}
+  .report-actions{padding:10px 18px;display:flex;gap:8px;border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0;}
+  .report-copy{background:var(--card2);border:1.5px solid rgba(255,215,0,.3);border-radius:999px;color:var(--text);font-family:'Nunito';font-weight:700;font-size:.78rem;padding:6px 14px;cursor:pointer;transition:all .2s;}
+  .report-copy:hover{background:var(--gold);color:#000;border-color:var(--gold);}
+  .report-body{padding:14px 18px;overflow-y:auto;flex:1;}
+  .report-group{margin-bottom:16px;}
+  .report-group-title{font-family:'Bebas Neue';font-size:1rem;color:var(--gold2);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid rgba(255,215,0,.15);}
+  .report-country{margin-bottom:10px;}
+  .report-country-name{font-size:.82rem;font-weight:900;color:var(--text);margin-bottom:5px;display:flex;align-items:center;gap:6px;}
+  .report-items{display:flex;flex-wrap:wrap;gap:5px;}
+  .report-item{background:var(--card2);border-radius:6px;padding:3px 8px;font-size:.72rem;display:flex;align-items:center;gap:4px;}
+  .report-item.r-have{border:1px solid rgba(0,230,118,.4);color:var(--green);}
+  .report-item.r-miss{border:1px solid rgba(255,255,255,.12);color:var(--muted);}
+  .report-item.r-rep{border:1px solid rgba(255,109,0,.4);color:var(--orange);}
+  .report-item.r-pct{border:1px solid rgba(41,121,255,.4);color:var(--blue);min-width:100px;justify-content:space-between;}
+  .r-num{font-weight:900;min-width:20px;}
+  .empty-msg{color:var(--muted);font-size:.85rem;text-align:center;padding:20px;}
+
+  /* MODAL */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:400;align-items:center;justify-content:center;}
   .modal-overlay.show{display:flex;}
-  .modal{background:var(--card);border:2px solid var(--gold);border-radius:18px;
-    padding:20px 18px;width:92%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.6);}
+  .modal{background:var(--card);border:2px solid var(--gold);border-radius:18px;padding:20px 18px;width:92%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.6);}
   .modal h3{font-family:'Bebas Neue';font-size:1.2rem;color:var(--gold);margin-bottom:10px;}
   .modal label{font-size:.76rem;color:var(--muted);display:block;margin-bottom:3px;}
-  .modal input,.modal select{width:100%;background:var(--card2);
-    border:1.5px solid rgba(255,215,0,.3);border-radius:10px;color:var(--text);
-    font-family:'Nunito';font-size:.88rem;padding:8px 11px;outline:none;margin-bottom:10px;}
+  .modal input,.modal select{width:100%;background:var(--card2);border:1.5px solid rgba(255,215,0,.3);border-radius:10px;color:var(--text);font-family:'Nunito';font-size:.88rem;padding:8px 11px;outline:none;margin-bottom:10px;}
   .modal input:focus,.modal select:focus{border-color:var(--gold);}
   .modal select option{background:var(--card2);}
   .modal-btns{display:flex;gap:8px;}
-  .modal-btns button{flex:1;padding:9px;border-radius:10px;border:none;
-    font-family:'Nunito';font-weight:900;font-size:.88rem;cursor:pointer;}
+  .modal-btns button{flex:1;padding:9px;border-radius:10px;border:none;font-family:'Nunito';font-weight:900;font-size:.88rem;cursor:pointer;}
   .btn-save{background:var(--gold);color:#000;}
   .btn-cancel{background:var(--card2);color:var(--text);border:1px solid rgba(255,255,255,.1);}
-  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-    background:var(--card2);border:1px solid var(--gold);border-radius:999px;
-    padding:9px 18px;font-size:.82rem;font-weight:700;
-    box-shadow:0 4px 20px rgba(0,0,0,.4);z-index:300;opacity:0;
-    transition:opacity .3s;white-space:nowrap;pointer-events:none;}
+  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--card2);border:1px solid var(--gold);border-radius:999px;padding:9px 18px;font-size:.82rem;font-weight:700;box-shadow:0 4px 20px rgba(0,0,0,.4);z-index:500;opacity:0;transition:opacity .3s;white-space:nowrap;pointer-events:none;}
   .toast.show{opacity:1;}
-  .loading-screen{position:fixed;inset:0;background:var(--dark);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    z-index:500;gap:14px;}
+  .loading-screen{position:fixed;inset:0;background:var(--dark);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:600;gap:14px;}
   .loading-screen h2{font-family:'Bebas Neue';font-size:2rem;color:var(--gold);}
   .loading-screen p{color:var(--muted);font-size:.88rem;}
-  .spinner{width:46px;height:46px;border:4px solid rgba(255,215,0,.2);
-    border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;}
+  .spinner{width:46px;height:46px;border:4px solid rgba(255,215,0,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
-  .export-bar{padding:10px 14px;display:flex;gap:8px;flex-wrap:wrap;
-    border-top:1px solid rgba(255,215,0,.12);background:var(--card);}
-  .export-bar button{background:var(--card2);border:1.5px solid rgba(255,215,0,.25);
-    border-radius:999px;color:var(--text);font-family:'Nunito';font-weight:700;
-    font-size:.78rem;padding:7px 14px;cursor:pointer;transition:all .2s;}
+  .export-bar{padding:10px 14px;display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid rgba(255,215,0,.12);background:var(--card);}
+  .export-bar button{background:var(--card2);border:1.5px solid rgba(255,215,0,.25);border-radius:999px;color:var(--text);font-family:'Nunito';font-weight:700;font-size:.78rem;padding:7px 14px;cursor:pointer;transition:all .2s;}
   .export-bar button:hover{background:var(--gold);color:#000;border-color:var(--gold);}
   .group-section.hidden-group{display:none;}
-  @media(max-width:480px){
-    .countries{grid-template-columns:1fr;padding:8px;}
-    .stickers-panel{grid-template-columns:repeat(4,1fr);}
-    .group-header{top:74px;}
-  }
+  @media(max-width:480px){.countries{grid-template-columns:1fr;padding:8px;}.stickers-panel{grid-template-columns:repeat(4,1fr);}.group-header{top:102px;}}
 </style>
 </head>
 <body>
 <div class="loading-screen" id="loadingScreen">
   <div class="spinner"></div>
   <h2>⚽ ÁLBUM MUNDIAL 2026</h2>
-  <p id="loadingText">Conectando con Firebase...</p>
+  <p>Conectando con Firebase...</p>
 </div>
+
 <header>
-  <h1>⚽ ÁLBUM MUNDIAL 2026 — PANINI</h1>
+  <h1>⚽ ÁLBUM DEL MUNDIAL DE FÚTBOL 2026</h1>
+  <h2>FAMILIA JIMÉNEZ FONSECA</h2>
   <div class="sync-status syncing" id="syncStatus">
     <div class="dot"></div><span id="syncText">Conectando...</span>
   </div>
 </header>
+
 <div class="stats-bar">
-  <div class="stat-pill">📋 Total:<span class="s-total" id="sTotal">0</span></div>
-  <div class="stat-pill">✅ Tengo:<span class="s-have" id="sHave">0</span></div>
-  <div class="stat-pill">❌ Faltan:<span class="s-miss" id="sMiss">0</span></div>
-  <div class="stat-pill">🔁 Repetidas:<span class="s-rep" id="sRep">0</span></div>
-  <div class="stat-pill">📊 Listo:<span class="s-pct" id="sPct">0%</span></div>
+  <div class="stat-pill" ondblclick="showReport('total')" title="Doble clic para ver detalle">📋 Total:<span class="s-total" id="sTotal">0</span></div>
+  <div class="stat-pill" ondblclick="showReport('have')" title="Doble clic para ver detalle">✅ Tengo:<span class="s-have" id="sHave">0</span></div>
+  <div class="stat-pill" ondblclick="showReport('miss')" title="Doble clic para ver detalle">❌ Faltan:<span class="s-miss" id="sMiss">0</span></div>
+  <div class="stat-pill" ondblclick="showReport('rep')" title="Doble clic para ver detalle">🔁 Repetidas:<span class="s-rep" id="sRep">0</span></div>
+  <div class="stat-pill" ondblclick="showReport('pct')" title="Doble clic para ver detalle">📊 Listo:<span class="s-pct" id="sPct">0%</span></div>
 </div>
+<div class="stat-hint">💡 Doble clic en cualquier botón para ver el detalle completo</div>
+
 <div class="controls">
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
@@ -186,11 +169,33 @@
   <div class="legend-item"><div class="legend-dot ld-miss"></div>Falta</div>
   <span style="margin-left:auto;font-size:.66rem">Clic=marcar | ✏️=editar nombre/cantidad</span>
 </div>
+
 <div id="mainContent"></div>
+
 <div class="export-bar">
   <button onclick="exportData()">💾 Exportar backup</button>
   <button onclick="importData()">📂 Importar backup</button>
 </div>
+
+<!-- PANEL REPORTE -->
+<div class="report-overlay" id="reportOverlay" onclick="closeReport(event)">
+  <div class="report-panel">
+    <div class="report-header">
+      <div>
+        <h3 id="reportTitle">Reporte</h3>
+        <div class="r-count" id="reportCount"></div>
+      </div>
+      <button class="report-close" onclick="closeReportDirect()">✕ Cerrar</button>
+    </div>
+    <div class="report-actions">
+      <button class="report-copy" onclick="copyReport()">📋 Copiar lista</button>
+      <button class="report-copy" onclick="closeReportDirect()">🔙 Volver al álbum</button>
+    </div>
+    <div class="report-body" id="reportBody"></div>
+  </div>
+</div>
+
+<!-- MODAL EDITAR -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <h3>✏️ EDITAR LÁMINA</h3>
@@ -217,33 +222,23 @@
     </div>
   </div>
 </div>
+
 <div class="toast" id="toast"></div>
 <input type="file" id="fileInput" accept=".json" style="display:none" onchange="loadFile(event)">
 
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import{getDatabase,ref,set,get,onValue}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-const firebaseConfig={
-  apiKey:"AIzaSyBSVPx8paHMLISxQGWXnd1l5PEBEjfPJNk",
-  authDomain:"album-mundial-2026-efab9.firebaseapp.com",
-  databaseURL:"https://album-mundial-2026-efab9-default-rtdb.firebaseio.com",
-  projectId:"album-mundial-2026-efab9",
-  storageBucket:"album-mundial-2026-efab9.firebasestorage.app",
-  messagingSenderId:"996293988580",
-  appId:"1:996293988580:web:1971f429fe4f08d2931cf1"
-};
+const firebaseConfig={apiKey:"AIzaSyBSVPx8paHMLISxQGWXnd1l5PEBEjfPJNk",authDomain:"album-mundial-2026-efab9.firebaseapp.com",databaseURL:"https://album-mundial-2026-efab9-default-rtdb.firebaseio.com",projectId:"album-mundial-2026-efab9",storageBucket:"album-mundial-2026-efab9.firebasestorage.app",messagingSenderId:"996293988580",appId:"1:996293988580:web:1971f429fe4f08d2931cf1"};
 const app=initializeApp(firebaseConfig);
 const db=getDatabase(app);
 
-// ===== LISTA OFICIAL PANINI 2026 — 48 EQUIPOS =====
-// Lámina 1 = Escudo (🛡️), Lámina 13 = Foto de equipo (👥), resto = jugadores
 const GROUPS=[
   {id:'A',name:'Grupo A',countries:[
     {id:'mexico',name:'México',flag:'🇲🇽',players:['🛡️ Escudo','Luis Malagón','Johan Vásquez','Jorge Sánchez','César Montes','Jesús Gallardo','Israel Reyes','Diego Lainez','Carlos Rodríguez','Edson Álvarez','Orbelin Pineda','Marcel Ruiz','👥 Foto de Equipo','Érick Sánchez','Hirving Lozano','Santiago Giménez','Raúl Jiménez','Alexis Vega','Roberto Alvarado','César Huerta']},
     {id:'corea',name:'Corea del Sur',flag:'🇰🇷',players:['🛡️ Escudo','Kim Seung-gyu','Kim Min-jae','Kim Young-gwon','Kim Jin-su','Lee Ki-je','Kim Moon-hwan','Jung Woo-young','Lee Jae-sung','Son Heung-min','Hwang In-beom','Lee Kang-in','👥 Foto de Equipo','Hwang Hee-chan','Oh Hyeon-gyu','Cho Gue-sung','Kwon Chang-hoon','Kim Tae-hwan','Na Sang-ho','Bae Jun-ho']},
-    {id:'sudafrica',name:'Sudáfrica',flag:'🇿🇦',players:['🛡️ Escudo','Ronwen Williams','Sipho Chaine','Aubrey Modiba','Siyanda Xulu','Teboho Mokoena','Bongani Zungu','Themba Zwane','Teboho Mokoena','Percy Tau','Lyle Foster','Evidence Makgopa','👥 Foto de Equipo','Oswin Appollis','Elias Mokwana','Thapelo Morena','Yusuf Maart','Lebo Mothiba','Bradley Cross','Siyethemba Sithebe']},
-    {id:'chequia',name:'Rep. Checa',flag:'🇨🇿',players:['🛡️ Escudo','Jindřich Staněk','Tomáš Vlček','Lukáš Hrádecký','David Jurásek','Tomáš Čvančara','Vladimír Coufal','Lukáš Provod','Antonín Barák','Tomáš Souček','Ondřej Lingr','Patrik Schick','👥 Foto de Equipo','Adam Hložek','Jan Kuchta','Mojmír Chytil','Michal Sadílek','Marek Jurásek','Pavel Šulc','David Jurásek']},
+    {id:'sudafrica',name:'Sudáfrica',flag:'🇿🇦',players:['🛡️ Escudo','Ronwen Williams','Sipho Chaine','Aubrey Modiba','Siyanda Xulu','Teboho Mokoena','Bongani Zungu','Themba Zwane','Percy Tau','Lyle Foster','Evidence Makgopa','Oswin Appollis','👥 Foto de Equipo','Elias Mokwana','Thapelo Morena','Yusuf Maart','Lebo Mothiba','Bradley Cross','Siyethemba Sithebe','Sifiso Hlanti']},
+    {id:'chequia',name:'Rep. Checa',flag:'🇨🇿',players:['🛡️ Escudo','Jindřich Staněk','Tomáš Vlček','David Jurásek','Tomáš Čvančara','Vladimír Coufal','Lukáš Provod','Antonín Barák','Tomáš Souček','Ondřej Lingr','Patrik Schick','Adam Hložek','👥 Foto de Equipo','Jan Kuchta','Mojmír Chytil','Michal Sadílek','Pavel Šulc','Marek Jurásek','Lukáš Hrádecký','Ladislav Krejčí']},
   ]},
   {id:'B',name:'Grupo B',countries:[
     {id:'canada',name:'Canadá',flag:'🇨🇦',players:['🛡️ Escudo','Maxime Crépeau','Kamal Miller','Steven Vitória','Derek Cornelius','Alistair Johnston','Richie Laryea','Stephen Eustáquio','Liam Millar','Jonathan David','Alphonso Davies','Tajon Buchanan','👥 Foto de Equipo','Cyle Larin','Lucas Cavallini','Junior Hoilett','Samuel Piette','Scott Kennedy','Mark-Anthony Kaye','Ali Ahmed']},
@@ -255,7 +250,7 @@ const GROUPS=[
     {id:'brasil',name:'Brasil',flag:'🇧🇷',players:['🛡️ Escudo','Alisson','Ederson','Marquinhos','Thiago Silva','Éder Militão','Danilo','Casemiro','Bruno Guimarães','Neymar Jr','Rodrygo','Vinícius Jr','👥 Foto de Equipo','Endrick','Raphinha','Gabriel Martinelli','Antony','Lucas Paquetá','Fred','Matheus Cunha']},
     {id:'marruecos',name:'Marruecos',flag:'🇲🇦',players:['🛡️ Escudo','Yassine Bounou','Munir Mohamedi','Achraf Hakimi','Romain Saïss','Nayef Aguerd','Jawad El Yamiq','Selim Amallah','Azzedine Ounahi','Hakim Ziyech','Sofiane Boufal','Youssef En-Nesyri','👥 Foto de Equipo','Abde Ezzalzouli','Ibrahim Diaz','Ilias Chair','Sofyan Amrabat','Amine Harit','Yahia Attiat-Allah','Bilal El Khannouss']},
     {id:'escocia',name:'Escocia',flag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',players:['🛡️ Escudo','Angus Gunn','Craig Gordon','Andrew Robertson','Scott McTominay','John Souttar','Grant Hanley','Stuart Armstrong','Billy Gilmour','John McGinn','Che Adams','Lyndon Dykes','👥 Foto de Equipo','Ryan Christie','Ryan Jack','Kenny McLean','Lawrence Shankland','Calvin Ramsay','Anthony Ralston','Callum McGregor']},
-    {id:'haiti',name:'Haití',flag:'🇭🇹',players:['🛡️ Escudo','Josué Duverger','Steven Saba','Bédouet Moïse','Dimitri Lavalee','Steeven Saba','Mechack Jérôme','Duckens Nazon','Kevin Lafrance','Frantzdy Pierrot','Wilde-Donald Guerrier','Richecarde Desir','👥 Foto de Equipo','André Clésio','Herve Bazile','James Léandre','Kervens Belfort','Sony Norde','Derrick Étienne','Ronaldo Bonamour']},
+    {id:'haiti',name:'Haití',flag:'🇭🇹',players:['🛡️ Escudo','Josué Duverger','Steven Saba','Bédouet Moïse','Dimitri Lavalee','Mechack Jérôme','Duckens Nazon','Kevin Lafrance','Frantzdy Pierrot','Wilde-Donald Guerrier','Richecarde Desir','André Clésio','👥 Foto de Equipo','Herve Bazile','James Léandre','Kervens Belfort','Sony Norde','Derrick Étienne','Ronaldo Bonamour','Steeven Saba']},
   ]},
   {id:'D',name:'Grupo D',countries:[
     {id:'usa',name:'Estados Unidos',flag:'🇺🇸',players:['🛡️ Escudo','Matt Freese','Chris Richards','Tim Ream','Mark McKenzie','Alex Freeman','Antonee Robinson','Tyler Adams','Tanner Tessmann','Weston McKennie','Christian Roldan','Timothy Weah','👥 Foto de Equipo','Diego Luna','Malik Tillman','Christian Pulisic','Brenden Aaronson','Ricardo Pepi','Haji Wright','Folarin Balogun']},
@@ -264,10 +259,10 @@ const GROUPS=[
     {id:'turquia',name:'Turquía',flag:'🇹🇷',players:['🛡️ Escudo','Mert Günok','Uğurcan Çakır','Merih Demiral','Samet Akaydin','Zeki Çelik','Ferdi Kadıoğlu','Hakan Çalhanoğlu','Okay Yokuşlu','İlkay Gündoğan','Arda Güler','Kerem Aktürkoğlu','👥 Foto de Equipo','Baris Yilmaz','Cenk Tosun','Yusuf Yazici','Burak Yilmaz','Semih Kılıçsoy','Halil Dervişoğlu','Orkun Kökçü']},
   ]},
   {id:'E',name:'Grupo E',countries:[
-    {id:'alemania',name:'Alemania',flag:'🇩🇪',players:['🛡️ Escudo','Manuel Neuer','Marc-André ter Stegen','Matthias Ginter','Niklas Süle','Antonio Rüdiger','Joshua Kimmich','Leon Goretzka','İlkay Gündoğan','Thomas Müller','Serge Gnabry','Kai Havertz','👥 Foto de Equipo','Leroy Sané','Timo Werner','Florian Wirtz','Jamal Musiala','Robin Gosens','David Raum','Niclas Füllkrug']},
+    {id:'alemania',name:'Alemania',flag:'🇩🇪',players:['🛡️ Escudo','Manuel Neuer','Marc-André ter Stegen','Matthias Ginter','Niklas Süle','Antonio Rüdiger','Joshua Kimmich','Leon Goretzka','Thomas Müller','Serge Gnabry','Kai Havertz','Leroy Sané','👥 Foto de Equipo','Timo Werner','Florian Wirtz','Jamal Musiala','Robin Gosens','David Raum','Niclas Füllkrug','İlkay Gündoğan']},
     {id:'ecuador',name:'Ecuador',flag:'🇪🇨',players:['🛡️ Escudo','Hernán Galíndez','Alexander Domínguez','Piero Hincapié','Byron Castillo','Jhegson Méndez','Moisés Caicedo','Jordy Caicedo','Ángel Mena','Enner Valencia','Jeremy Sarmiento','Gonzalo Plata','👥 Foto de Equipo','Romario Ibarra','Michael Estrada','Kevin Rodríguez','José Cifuentes','Ángel Preciado','Stiven Méndez','Kendry Páez']},
-    {id:'cotedivoire',name:'Costa de Marfil',flag:'🇨🇮',players:['🛡️ Escudo','Badra Ali Sangaré','Djibril Sidibé','Eric Bailly','Simon Deli','Serge Aurier','Ibrahim Sangaré','Jean Michaël Seri','Franck Kessié','Nicolas Pépé','Sébastien Haller','Wilfried Zaha','👥 Foto de Equipo','Salomon Kalou','Maxwel Cornet','Jonathan Kodjia','Christian Kouamé','Habib Maïga','Adingra Simon','Evan N\'Dicka']},
-    {id:'curazao',name:'Curazao',flag:'🇨🇼',players:['🛡️ Escudo','Eloy Room','Tyronne Ebuehi','Cuco Martina','Ethan Surinach','Shaquille Martis','Rangelo Janga','Leandro Bacuna','Jarchinio Antonia','Gevaro Nepomuceno','Jurgen Locadia','Curaçao Player 12','👥 Foto de Equipo','Curaçao Player 14','Curaçao Player 15','Curaçao Player 16','Curaçao Player 17','Curaçao Player 18','Curaçao Player 19','Curaçao Player 20']},
+    {id:'cotedivoire',name:'Costa de Marfil',flag:'🇨🇮',players:['🛡️ Escudo','Badra Ali Sangaré','Djibril Sidibé','Eric Bailly','Simon Deli','Serge Aurier','Ibrahim Sangaré','Jean Michaël Seri','Franck Kessié','Nicolas Pépé','Sébastien Haller','Wilfried Zaha','👥 Foto de Equipo','Maxwel Cornet','Jonathan Kodjia','Christian Kouamé','Adingra Simon','Evan N\'Dicka','Habib Maïga','Odilon Kossounou']},
+    {id:'curazao',name:'Curazao',flag:'🇨🇼',players:['🛡️ Escudo','Eloy Room','Tyronne Ebuehi','Cuco Martina','Ethan Surinach','Shaquille Martis','Rangelo Janga','Leandro Bacuna','Jarchinio Antonia','Gevaro Nepomuceno','Jurgen Locadia','Brandley Kuwas','👥 Foto de Equipo','Quentin Boisgard','Myron Boadu','Juninho Bacuna','Curaçao Player 16','Curaçao Player 17','Curaçao Player 18','Curaçao Player 19']},
   ]},
   {id:'F',name:'Grupo F',countries:[
     {id:'holanda',name:'Países Bajos',flag:'🇳🇱',players:['🛡️ Escudo','Jasper Cillessen','Remko Pasveer','Virgil van Dijk','Matthijs de Ligt','Nathan Aké','Denzel Dumfries','Frenkie de Jong','Davy Klaassen','Memphis Depay','Steven Bergwijn','Cody Gakpo','👥 Foto de Equipo','Wout Weghorst','Donyell Malen','Xavi Simons','Tijjani Reijnders','Jeremie Frimpong','Jan Paul van Hecke','Ryan Gravenberch']},
@@ -297,13 +292,13 @@ const GROUPS=[
     {id:'argentina',name:'Argentina',flag:'🇦🇷',players:['🛡️ Escudo','Emiliano Martínez','Franco Armani','Cristian Romero','Nicolás Otamendi','Lisandro Martínez','Nahuel Molina','Rodrigo De Paul','Alexis Mac Allister','Ángel Di María','Lautaro Martínez','Lionel Messi','👥 Foto de Equipo','Paulo Dybala','Julián Álvarez','Nicolás González','Enzo Fernández','Leandro Paredes','Germán Pezzella','Thiago Almada']},
     {id:'austria',name:'Austria',flag:'🇦🇹',players:['🛡️ Escudo','Patrick Pentz','Heinz Lindner','David Alaba','Stefan Posch','Phillipp Lienhart','Maximilian Wöber','Konrad Laimer','Marcel Sabitzer','Florian Grillitsch','Marko Arnautovic','Michael Gregoritsch','👥 Foto de Equipo','Christoph Baumgartner','Nicolas Seiwald','Patrick Wimmer','Romano Schmid','Xaver Schlager','Sasa Kalajdzic','Florian Kainz']},
     {id:'argelia',name:'Argelia',flag:'🇩🇿',players:['🛡️ Escudo','Raïs M\'Bolhi','Youcef Attal','Ramy Bensebaini','Djamel Benlamri','Aissa Mandi','Mehdi Zeffane','Sofiane Feghouli','Ismaël Bennacer','Riyad Mahrez','Islam Slimani','Youcef Belaïli','👥 Foto de Equipo','Anis Slimane','Houssem Aouar','Amine Gouiri','Andy Delort','Farès Chaïbi','Samy Mmaee','Adam Ounas']},
-    {id:'jordania',name:'Jordania',flag:'🇯🇴',players:['🛡️ Escudo','Yazeed Abulaila','Sanad Naimat','Baha\'eddine Fa\'our','Yazan Al-Naimat','Anas Bani Yaseen','Abdallah Nasib','Musa Al-Taamari','Ahmad Al-Saleh','Mahmoud Almardi','Yazan Al-Arab','Osama Al-Rashdan','👥 Foto de Equipo','Khalil Bani Attiah','Ahmad Nawas','Aws Khasawneh','Mohammad Salah','Faris Nassar','Sami Al-Aqrabawi','Anas Bani Yaseen']},
+    {id:'jordania',name:'Jordania',flag:'🇯🇴',players:['🛡️ Escudo','Yazeed Abulaila','Sanad Naimat','Baha\'eddine Fa\'our','Yazan Al-Naimat','Anas Bani Yaseen','Abdallah Nasib','Musa Al-Taamari','Ahmad Al-Saleh','Mahmoud Almardi','Yazan Al-Arab','Osama Al-Rashdan','👥 Foto de Equipo','Khalil Bani Attiah','Ahmad Nawas','Aws Khasawneh','Mohammad Salah','Faris Nassar','Sami Al-Aqrabawi','Hassan Abdel-Fattah']},
   ]},
   {id:'K',name:'Grupo K',countries:[
     {id:'portugal',name:'Portugal',flag:'🇵🇹',players:['🛡️ Escudo','Rui Patrício','Diogo Costa','Rúben Dias','Pepe','Raphael Guerreiro','João Cancelo','Rúben Neves','Bernardo Silva','Joao Felix','Cristiano Ronaldo','Rafael Leão','👥 Foto de Equipo','Diogo Jota','André Silva','Gonçalo Ramos','Bruno Fernandes','Nuno Mendes','Danilo Pereira','Vitinha']},
-    {id:'colombia',name:'Colombia',flag:'🇨🇴',players:['🛡️ Escudo','Camilo Vargas','David Ospina','Dávinson Sánchez','Yerry Mina','Daniel Muñoz','Johan Mojica','Jhon Lucumí','Santiago Arias','James Rodríguez','Luis Díaz','Jhon Córdoba','👥 Foto de Equipo','Richard Ríos','Cucho Hernández','Luis Sinisterra','Mateus Uribe','Jefferson Lerma','Lerma','Eder Álvarez Balanta']},
+    {id:'colombia',name:'Colombia',flag:'🇨🇴',players:['🛡️ Escudo','Camilo Vargas','David Ospina','Dávinson Sánchez','Yerry Mina','Daniel Muñoz','Johan Mojica','Jhon Lucumí','Santiago Arias','James Rodríguez','Luis Díaz','Jhon Córdoba','👥 Foto de Equipo','Richard Ríos','Cucho Hernández','Luis Sinisterra','Mateus Uribe','Jefferson Lerma','Eder Álvarez Balanta','Carlos Cuesta']},
     {id:'uzbekistan',name:'Uzbekistán',flag:'🇺🇿',players:['🛡️ Escudo','Utkir Yusupov','Farrukh Sayfiev','Sherzod Nasrullaev','Umar Eshmurodov','Husniddin Aliqulov','Rustamjon Ashurmatov','Khojiakbar Alijonov','Abdukodir Khusanov','Odiljon Hamrobekov','Otabek Shukurov','Jamshid Iskanderov','👥 Foto de Equipo','Eldor Shomurodov','Jaloliddin Masharipov','Khurshid Tursunov','Dostonbek Khamdamov','Azizbek Turgunboev','Bekzod Holmatov','Jakhongir Sidiqov']},
-    {id:'rdcongo',name:'RD Congo',flag:'🇨🇩',players:['🛡️ Escudo','Joël Kiassumbua','Ben Malango','Chancel Mbemba','Marcel Tisserand','Yannick Bangala','Silas Wissa','Yoane Wissa','Arthur Masuaku','Cédric Bakambu','Dieumerci Mbokani','Paul-José Mpoku','👥 Foto de Equipo','Britt Assombalonga','Jonathan Bolingi','Gabriel Zakuani','Hérita Ilunga','Theo Bongonda','Meschak Elia','Fiston Mayele']},
+    {id:'rdcongo',name:'RD Congo',flag:'🇨🇩',players:['🛡️ Escudo','Joël Kiassumbua','Ben Malango','Chancel Mbemba','Marcel Tisserand','Yannick Bangala','Silas Wissa','Yoane Wissa','Arthur Masuaku','Cédric Bakambu','Dieumerci Mbokani','Paul-José Mpoku','👥 Foto de Equipo','Britt Assombalonga','Jonathan Bolingi','Gabriel Zakuani','Theo Bongonda','Meschak Elia','Fiston Mayele','Hérita Ilunga']},
   ]},
   {id:'L',name:'Grupo L',countries:[
     {id:'england',name:'Inglaterra',flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',players:['🛡️ Escudo','Jordan Pickford','Aaron Ramsdale','Harry Maguire','John Stones','Luke Shaw','Kyle Walker','Declan Rice','Jordan Henderson','Bukayo Saka','Harry Kane','Raheem Sterling','👥 Foto de Equipo','Phil Foden','Marcus Rashford','Jude Bellingham','Trent Alexander-Arnold','Ben White','Conor Gallagher','Jarrod Bowen']},
@@ -318,30 +313,23 @@ let albumData={};
 let editTarget=null;
 let activeFilter='all';
 
-function setSyncStatus(state,text){
-  const el=document.getElementById('syncStatus');
-  el.className='sync-status '+state;
-  document.getElementById('syncText').textContent=text;
-}
-
+function setSyncStatus(s,t){const el=document.getElementById('syncStatus');el.className='sync-status '+s;document.getElementById('syncText').textContent=t;}
 function getAllCountries(){return GROUPS.flatMap(g=>g.countries);}
+function getPlayerName(c,i){return albumData[c.id]?.[i]?.name||c.players[i-1]||'';}
 
 function initEmpty(){
   albumData={};
   GROUPS.forEach(g=>g.countries.forEach(c=>{
     albumData[c.id]={};
-    for(let i=1;i<=STICKERS_PER;i++)
-      albumData[c.id][i]={state:0,name:c.players[i-1]||'',qty:0};
+    for(let i=1;i<=STICKERS_PER;i++)albumData[c.id][i]={state:0,name:c.players[i-1]||'',qty:0};
   }));
 }
-
 function ensureData(){
   GROUPS.forEach(g=>g.countries.forEach(c=>{
     if(!albumData[c.id])albumData[c.id]={};
     for(let i=1;i<=STICKERS_PER;i++){
       if(!albumData[c.id][i])albumData[c.id][i]={state:0,name:c.players[i-1]||'',qty:0};
       if(albumData[c.id][i].qty===undefined)albumData[c.id][i].qty=albumData[c.id][i].state===2?2:albumData[c.id][i].state;
-      // Si no tiene nombre guardado, usar el del álbum
       if(!albumData[c.id][i].name&&c.players[i-1])albumData[c.id][i].name=c.players[i-1];
     }
   }));
@@ -352,45 +340,32 @@ async function loadFromFirebase(){
     const snap=await get(ref(db,'album'));
     if(snap.exists()){albumData=snap.val();ensureData();}
     else{initEmpty();await set(ref(db,'album'),albumData);}
-    setSyncStatus('online','🔥 Firebase conectado');
+    setSyncStatus('online','🔥 Guardado en Firebase');
     document.getElementById('loadingScreen').style.display='none';
     renderAll();
-    onValue(ref(db,'album'),(s)=>{
-      if(s.exists()){albumData=s.val();ensureData();refreshAllCards();updateStats();}
-    });
+    onValue(ref(db,'album'),(s)=>{if(s.exists()){albumData=s.val();ensureData();refreshAllCards();updateStats();}});
   }catch(e){
     setSyncStatus('offline','❌ Sin conexión — revisa reglas Firebase');
     document.getElementById('loadingScreen').style.display='none';
     initEmpty();renderAll();
-    showToast('⚠️ Sin conexión. Ve a Firebase → Realtime DB → Reglas → true/true → Publicar');
   }
 }
 
 async function saveSticker(cid,num){
-  try{
-    setSyncStatus('syncing','⏳ Guardando...');
-    await set(ref(db,`album/${cid}/${num}`),albumData[cid][num]);
-    setSyncStatus('online','✅ Guardado en Firebase');
-  }catch(e){setSyncStatus('offline','❌ Error al guardar');}
+  try{setSyncStatus('syncing','⏳ Guardando...');await set(ref(db,`album/${cid}/${num}`),albumData[cid][num]);setSyncStatus('online','✅ Guardado en Firebase');}
+  catch(e){setSyncStatus('offline','❌ Error al guardar');}
 }
 
 function getCountryStats(cid){
   let have=0,repTotal=0;
-  for(let i=1;i<=STICKERS_PER;i++){
-    const qty=albumData[cid]?.[i]?.qty??0;
-    if(qty>=1)have++;
-    if(qty>=2)repTotal+=qty-1;
-  }
+  for(let i=1;i<=STICKERS_PER;i++){const qty=albumData[cid]?.[i]?.qty??0;if(qty>=1)have++;if(qty>=2)repTotal+=qty-1;}
   return{have,repTotal};
 }
 
 function updateStats(){
   let have=0,repTotal=0;
   const total=GROUPS.reduce((a,g)=>a+g.countries.length,0)*STICKERS_PER;
-  GROUPS.forEach(g=>g.countries.forEach(c=>{
-    const s=getCountryStats(c.id);
-    have+=s.have;repTotal+=s.repTotal;
-  }));
+  GROUPS.forEach(g=>g.countries.forEach(c=>{const s=getCountryStats(c.id);have+=s.have;repTotal+=s.repTotal;}));
   document.getElementById('sTotal').textContent=total;
   document.getElementById('sHave').textContent=have;
   document.getElementById('sMiss').textContent=total-have;
@@ -398,124 +373,131 @@ function updateStats(){
   document.getElementById('sPct').textContent=Math.round((have/total)*100)+'%';
 }
 
-function getStickerIcon(name,num){
-  if(num===1)return'🛡️';
-  if(num===13)return'👥';
-  return'👤';
-}
+// ===== REPORTES =====
+window.showReport=function(type){
+  const titles={total:'📋 TODAS LAS LÁMINAS',have:'✅ LÁMINAS QUE TENGO',miss:'❌ LÁMINAS QUE FALTAN',rep:'🔁 LÁMINAS REPETIDAS',pct:'📊 PROGRESO POR PAÍS'};
+  document.getElementById('reportTitle').textContent=titles[type];
+  let html='';let copyText=titles[type]+'\n'+'='.repeat(40)+'\n';let totalItems=0;
 
+  if(type==='pct'){
+    // Progreso por país ordenado de mayor a menor
+    const list=[];
+    GROUPS.forEach(g=>g.countries.forEach(c=>{
+      const s=getCountryStats(c.id);
+      const pct=Math.round((s.have/STICKERS_PER)*100);
+      list.push({c,g,s,pct});
+    }));
+    list.sort((a,b)=>b.pct-a.pct);
+    html='<div class="report-items" style="display:flex;flex-direction:column;gap:6px;">';
+    list.forEach(({c,g,s,pct})=>{
+      const bar=`<div style="flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin:0 8px"><div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#00e676,#00bcd4);border-radius:999px"></div></div>`;
+      html+=`<div class="report-item r-pct" style="min-width:unset;width:100%;padding:6px 10px;">
+        <span>${c.flag} ${c.name}</span>${bar}
+        <span style="min-width:60px;text-align:right;font-weight:900">${s.have}/${STICKERS_PER} — ${pct}%</span>
+      </div>`;
+      copyText+=`${c.flag} ${c.name} (Grupo ${g.id}): ${s.have}/${STICKERS_PER} = ${pct}%\n`;
+      totalItems++;
+    });
+    html+='</div>';
+  } else {
+    GROUPS.forEach(g=>{
+      let groupHtml='';let groupCopyText='';let groupHasItems=false;
+      g.countries.forEach(c=>{
+        const items=[];
+        for(let i=1;i<=STICKERS_PER;i++){
+          const qty=albumData[c.id]?.[i]?.qty??0;
+          const name=getPlayerName(c,i);
+          if(type==='total'){items.push({i,name,qty,cls:'r-miss'});}
+          else if(type==='have'&&qty>=1){items.push({i,name,qty,cls:'r-have'});}
+          else if(type==='miss'&&qty===0){items.push({i,name,qty,cls:'r-miss'});}
+          else if(type==='rep'&&qty>=2){items.push({i,name,qty,cls:'r-rep'});}
+        }
+        if(items.length>0){
+          groupHasItems=true;totalItems+=items.length;
+          groupHtml+=`<div class="report-country"><div class="report-country-name">${c.flag} ${c.name}</div><div class="report-items">`;
+          groupCopyText+=`\n  ${c.flag} ${c.name}:\n`;
+          items.forEach(({i,name,qty,cls})=>{
+            const badge=type==='rep'?` <strong style="margin-left:4px">×${qty}</strong>`:'';
+            groupHtml+=`<div class="report-item ${cls}"><span class="r-num">#${i}</span><span>${name}</span>${badge}</div>`;
+            if(type==='rep')groupCopyText+=`    #${i} ${name} ×${qty}\n`;
+            else groupCopyText+=`    #${i} ${name}\n`;
+          });
+          groupHtml+='</div></div>';
+        }
+      });
+      if(groupHasItems){
+        html+=`<div class="report-group"><div class="report-group-title">GRUPO ${g.id}</div>${groupHtml}</div>`;
+        copyText+=`\nGRUPO ${g.id}\n${groupCopyText}`;
+      }
+    });
+  }
+
+  if(!html)html=`<div class="empty-msg">No hay láminas en esta categoría todavía.</div>`;
+  document.getElementById('reportBody').innerHTML=html;
+  document.getElementById('reportCount').textContent=`${totalItems} elemento${totalItems!==1?'s':''}`;
+  document.getElementById('reportOverlay').classList.add('show');
+  window._reportCopyText=copyText;
+};
+
+window.closeReport=function(e){if(e.target===document.getElementById('reportOverlay'))closeReportDirect();};
+window.closeReportDirect=function(){document.getElementById('reportOverlay').classList.remove('show');};
+window.copyReport=function(){
+  navigator.clipboard.writeText(window._reportCopyText||'').then(()=>showToast('📋 Lista copiada al portapapeles')).catch(()=>showToast('❌ No se pudo copiar'));
+};
+
+// ===== RENDER =====
 function renderAll(){
   document.getElementById('mainContent').innerHTML=GROUPS.map(renderGroup).join('');
   updateStats();applyFilter();
 }
-
 function renderGroup(g){
   const allHave=g.countries.reduce((a,c)=>a+getCountryStats(c.id).have,0);
   const total=g.countries.length*STICKERS_PER;
-  return`<div class="group-section" id="gs-${g.id}">
-    <div class="group-header">
-      <div class="group-badge">GRP ${g.id}</div>
-      <div><div class="group-title"><strong>${g.countries.map(c=>c.name).join(' · ')}</strong></div></div>
-      <div class="group-stats">${allHave}/${total}</div>
-    </div>
-    <div class="countries">${g.countries.map(c=>renderCountry(c)).join('')}</div>
-  </div>`;
+  return`<div class="group-section" id="gs-${g.id}"><div class="group-header"><div class="group-badge">GRP ${g.id}</div><div><div class="group-title"><strong>${g.countries.map(c=>c.name).join(' · ')}</strong></div></div><div class="group-stats">${allHave}/${total}</div></div><div class="countries">${g.countries.map(c=>renderCountry(c)).join('')}</div></div>`;
 }
-
 function renderCountry(c){
-  const stats=getCountryStats(c.id);
-  const pct=Math.round((stats.have/STICKERS_PER)*100);
-  const isComplete=stats.have===STICKERS_PER;
-  let stk='';
-  for(let i=1;i<=STICKERS_PER;i++)stk+=renderSticker(c,i);
-  return`<div class="country-card ${isComplete?'complete':''}" id="cc-${c.id}">
-    <div class="country-header" onclick="toggleCountry('${c.id}')">
-      <div class="country-left">
-        <span class="country-flag">${c.flag}</span>
-        <div class="country-info">
-          <h3>${c.name}</h3>
-          <div class="c-sub">${stats.have}/${STICKERS_PER} láminas${stats.repTotal>0?' · '+stats.repTotal+' sobrantes':''}</div>
-        </div>
-      </div>
-      <div class="country-right">
-        <div class="mini-bar-wrap"><div class="mini-bar" style="width:${pct}%"></div></div>
-        <div class="c-count">${pct}%</div>
-        <span class="toggle-arrow">▼</span>
-      </div>
-    </div>
-    <div class="stickers-panel" id="sp-${c.id}">${stk}</div>
-  </div>`;
+  const stats=getCountryStats(c.id);const pct=Math.round((stats.have/STICKERS_PER)*100);const isComplete=stats.have===STICKERS_PER;
+  let stk='';for(let i=1;i<=STICKERS_PER;i++)stk+=renderSticker(c,i);
+  return`<div class="country-card ${isComplete?'complete':''}" id="cc-${c.id}"><div class="country-header" onclick="toggleCountry('${c.id}')"><div class="country-left"><span class="country-flag">${c.flag}</span><div class="country-info"><h3>${c.name}</h3><div class="c-sub">${stats.have}/${STICKERS_PER} láminas${stats.repTotal>0?' · '+stats.repTotal+' sobrantes':''}</div></div></div><div class="country-right"><div class="mini-bar-wrap"><div class="mini-bar" style="width:${pct}%"></div></div><div class="c-count">${pct}%</div><span class="toggle-arrow">▼</span></div></div><div class="stickers-panel" id="sp-${c.id}">${stk}</div></div>`;
 }
-
+function getStickerBaseIcon(num){if(num===1)return'🛡️';if(num===13)return'👥';return'👤';}
 function renderSticker(c,num){
   const d=albumData[c.id]?.[num]??{qty:0,name:c.players[num-1]||''};
-  const qty=d.qty??0;
-  const baseIcon=getStickerIcon(d.name,num);
-  const stateIcon=qty===0?baseIcon:qty===1?'✅':'🔁';
+  const qty=d.qty??0;const base=getStickerBaseIcon(num);
+  const icon=qty===0?base:qty===1?'✅':'🔁';
   const cls=qty===0?(num===1||num===13?'special':''):qty===1?'have':'repeated';
-  const badge=qty>=2?`×${qty}`:'';
-  const dispName=d.name||c.players[num-1]||'---';
-  return`<div class="sticker ${cls}" id="stk-${c.id}-${num}" onclick="cycleSticker('${c.id}',${num})">
-    <span class="rep-badge">${badge}</span>
-    <span class="sticker-num">#${num}</span>
-    <span class="sticker-icon">${stateIcon}</span>
-    <span class="sticker-name" title="${dispName}">${dispName}</span>
-    <div class="sticker-actions" onclick="event.stopPropagation()">
-      <button onclick="openModal('${c.id}',${num})">✏️</button>
-    </div>
-  </div>`;
+  const badge=qty>=2?`×${qty}`:'';const dispName=d.name||c.players[num-1]||'---';
+  return`<div class="sticker ${cls}" id="stk-${c.id}-${num}" onclick="cycleSticker('${c.id}',${num})"><span class="rep-badge">${badge}</span><span class="sticker-num">#${num}</span><span class="sticker-icon">${icon}</span><span class="sticker-name" title="${dispName}">${dispName}</span><div class="sticker-actions" onclick="event.stopPropagation()"><button onclick="openModal('${c.id}',${num})">✏️</button></div></div>`;
 }
-
 function updateStickerEl(cid,num){
-  const el=document.getElementById(`stk-${cid}-${num}`);
-  if(!el)return;
+  const el=document.getElementById(`stk-${cid}-${num}`);if(!el)return;
   const c=getAllCountries().find(x=>x.id===cid);
-  const d=albumData[cid]?.[num]??{qty:0,name:''};
-  const qty=d.qty??0;
-  const baseIcon=getStickerIcon(d.name,num);
-  const stateIcon=qty===0?baseIcon:qty===1?'✅':'🔁';
-  const cls=qty===0?(num===1||num===13?'special':''):qty===1?'have':'repeated';
-  el.className='sticker '+cls;
-  el.querySelector('.sticker-icon').textContent=stateIcon;
+  const d=albumData[cid]?.[num]??{qty:0,name:''};const qty=d.qty??0;const base=getStickerBaseIcon(num);
+  const icon=qty===0?base:qty===1?'✅':'🔁';const cls=qty===0?(num===1||num===13?'special':''):qty===1?'have':'repeated';
+  el.className='sticker '+cls;el.querySelector('.sticker-icon').textContent=icon;
   el.querySelector('.sticker-name').textContent=d.name||(c?.players[num-1])||'---';
-  const badge=el.querySelector('.rep-badge');
-  badge.textContent=qty>=2?`×${qty}`:'';
-  badge.style.display=qty>=2?'flex':'none';
+  const badge=el.querySelector('.rep-badge');badge.textContent=qty>=2?`×${qty}`:'';badge.style.display=qty>=2?'flex':'none';
 }
-
 function updateCountryCard(cid){
   const c=getAllCountries().find(x=>x.id===cid);if(!c)return;
-  const stats=getCountryStats(cid);
-  const pct=Math.round((stats.have/STICKERS_PER)*100);
+  const stats=getCountryStats(cid);const pct=Math.round((stats.have/STICKERS_PER)*100);
   const card=document.getElementById('cc-'+cid);if(!card)return;
   card.classList.toggle('complete',stats.have===STICKERS_PER);
-  const sub=card.querySelector('.c-sub');
-  if(sub)sub.textContent=`${stats.have}/${STICKERS_PER} láminas${stats.repTotal>0?' · '+stats.repTotal+' sobrantes':''}`;
+  const sub=card.querySelector('.c-sub');if(sub)sub.textContent=`${stats.have}/${STICKERS_PER} láminas${stats.repTotal>0?' · '+stats.repTotal+' sobrantes':''}`;
   const bar=card.querySelector('.mini-bar');if(bar)bar.style.width=pct+'%';
   const cnt=card.querySelector('.c-count');if(cnt)cnt.textContent=pct+'%';
 }
-
-function refreshAllCards(){
-  GROUPS.forEach(g=>g.countries.forEach(c=>{
-    updateCountryCard(c.id);
-    for(let i=1;i<=STICKERS_PER;i++)updateStickerEl(c.id,i);
-  }));
-}
+function refreshAllCards(){GROUPS.forEach(g=>g.countries.forEach(c=>{updateCountryCard(c.id);for(let i=1;i<=STICKERS_PER;i++)updateStickerEl(c.id,i);}));}
 
 window.cycleSticker=async function(cid,num){
-  const d=albumData[cid][num];
-  d.qty=(d.qty??0)===0?1:0;
-  d.state=d.qty>=2?2:d.qty===1?1:0;
+  const d=albumData[cid][num];d.qty=(d.qty??0)===0?1:0;d.state=d.qty>=2?2:d.qty===1?1:0;
   updateStickerEl(cid,num);updateCountryCard(cid);updateStats();
-  showToast(d.qty===1?`✅ Tenida: ${d.name||'#'+num}`:`❌ Quitada: ${d.name||'#'+num} — usa ✏️ para repetidas`);
+  const n=d.name||'#'+num;showToast(d.qty===1?`✅ Tenida: ${n}`:`❌ Quitada: ${n} — usa ✏️ para repetidas`);
   await saveSticker(cid,num);
 };
-
 window.toggleCountry=function(cid){document.getElementById('cc-'+cid)?.classList.toggle('open');};
-
 window.openModal=function(cid,num){
-  editTarget={cid,num};
-  const c=getAllCountries().find(x=>x.id===cid);
+  editTarget={cid,num};const c=getAllCountries().find(x=>x.id===cid);
   document.getElementById('modalCountry').textContent=c?.name||cid;
   document.getElementById('modalNum').textContent=num;
   const d=albumData[cid][num];
@@ -524,25 +506,17 @@ window.openModal=function(cid,num){
   document.getElementById('modalOverlay').classList.add('show');
   setTimeout(()=>document.getElementById('modalInput').focus(),100);
 };
-window.closeModal=function(){
-  document.getElementById('modalOverlay').classList.remove('show');editTarget=null;
-};
+window.closeModal=function(){document.getElementById('modalOverlay').classList.remove('show');editTarget=null;};
 window.saveName=async function(){
-  if(!editTarget)return;
-  const{cid,num}=editTarget;
+  if(!editTarget)return;const{cid,num}=editTarget;
   const name=document.getElementById('modalInput').value.trim();
   const qty=parseInt(document.getElementById('modalRep').value);
-  albumData[cid][num].name=name;albumData[cid][num].qty=qty;
-  albumData[cid][num].state=qty>=2?2:qty===1?1:0;
-  updateStickerEl(cid,num);updateCountryCard(cid);updateStats();
-  closeModal();showToast(`💾 Guardado: ${name||'#'+num} ×${qty}`);
-  await saveSticker(cid,num);
+  albumData[cid][num].name=name;albumData[cid][num].qty=qty;albumData[cid][num].state=qty>=2?2:qty===1?1:0;
+  updateStickerEl(cid,num);updateCountryCard(cid);updateStats();closeModal();
+  showToast(`💾 Guardado: ${name||'#'+num} ×${qty}`);await saveSticker(cid,num);
 };
-
 document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
-document.getElementById('modalInput').addEventListener('keydown',function(e){
-  if(e.key==='Enter')saveName();if(e.key==='Escape')closeModal();
-});
+document.getElementById('modalInput').addEventListener('keydown',function(e){if(e.key==='Enter')saveName();if(e.key==='Escape')closeModal();});
 
 document.getElementById('searchInput').addEventListener('input',applyFilter);
 document.querySelectorAll('.filter-btn').forEach(btn=>{
@@ -551,7 +525,6 @@ document.querySelectorAll('.filter-btn').forEach(btn=>{
     this.classList.add('active');activeFilter=this.dataset.filter;applyFilter();
   });
 });
-
 function applyFilter(){
   const q=document.getElementById('searchInput').value.toLowerCase().trim();
   GROUPS.forEach(g=>{
@@ -560,29 +533,22 @@ function applyFilter(){
       const card=document.getElementById('cc-'+c.id);if(!card)return;
       const stats=getCountryStats(c.id);
       let sm=!q||c.name.toLowerCase().includes(q);
-      if(!sm&&q){
-        for(let i=1;i<=STICKERS_PER;i++){
-          if((albumData[c.id]?.[i]?.name||c.players[i-1]||'').toLowerCase().includes(q)){sm=true;break;}
-        }
-      }
+      if(!sm&&q){for(let i=1;i<=STICKERS_PER;i++){if((getPlayerName(c,i)).toLowerCase().includes(q)){sm=true;break;}}}
       let cm=true;
       if(activeFilter==='complete')cm=stats.have===STICKERS_PER;
       else if(activeFilter==='incomplete')cm=stats.have<STICKERS_PER;
       else if(activeFilter==='started')cm=stats.have>0&&stats.have<STICKERS_PER;
-      const v=sm&&cm;
-      card.classList.toggle('hidden',!v);
-      if(v)gv=true;
+      const v=sm&&cm;card.classList.toggle('hidden',!v);if(v)gv=true;
       if(q&&sm&&!c.name.toLowerCase().includes(q))card.classList.add('open');
     });
-    const gs=document.getElementById('gs-'+g.id);
-    if(gs)gs.classList.toggle('hidden-group',!gv);
+    const gs=document.getElementById('gs-'+g.id);if(gs)gs.classList.toggle('hidden-group',!gv);
   });
 }
 
 window.exportData=function(){
   const blob=new Blob([JSON.stringify({version:4,data:albumData,exported:new Date().toISOString()},null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download=`album_mundial_2026_${new Date().toLocaleDateString('es').replace(/\//g,'-')}.json`;
+  a.download=`album_mundial_2026_familia_jimenez_${new Date().toLocaleDateString('es').replace(/\//g,'-')}.json`;
   a.click();showToast('💾 Backup exportado');
 };
 window.importData=function(){document.getElementById('fileInput').click();};
@@ -590,10 +556,8 @@ window.loadFile=async function(e){
   const file=e.target.files[0];if(!file)return;
   const r=new FileReader();
   r.onload=async function(ev){
-    try{
-      const p=JSON.parse(ev.target.result);albumData=p.data||p;ensureData();
-      await set(ref(db,'album'),albumData);renderAll();showToast('📂 Importado y guardado');
-    }catch{showToast('❌ Error al importar');}
+    try{const p=JSON.parse(ev.target.result);albumData=p.data||p;ensureData();await set(ref(db,'album'),albumData);renderAll();showToast('📂 Importado y guardado');}
+    catch{showToast('❌ Error al importar');}
   };
   r.readAsText(file);e.target.value='';
 };
