@@ -226,12 +226,33 @@
 <div class="toast" id="toast"></div>
 <input type="file" id="fileInput" accept=".json" style="display:none" onchange="loadFile(event)">
 
-<script type="module">
-import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import{getDatabase,ref,set,get,onValue}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-const firebaseConfig={apiKey:"AIzaSyBSVPx8paHMLISxQGWXnd1l5PEBEjfPJNk",authDomain:"album-mundial-2026-efab9.firebaseapp.com",databaseURL:"https://album-mundial-2026-efab9-default-rtdb.firebaseio.com",projectId:"album-mundial-2026-efab9",storageBucket:"album-mundial-2026-efab9.firebasestorage.app",messagingSenderId:"996293988580",appId:"1:996293988580:web:1971f429fe4f08d2931cf1"};
-const app=initializeApp(firebaseConfig);
-const db=getDatabase(app);
+<script>
+// Usar REST API directamente para evitar bloqueo de cookies de terceros
+const DB_URL="https://album-mundial-2026-efab9-default-rtdb.firebaseio.com";
+
+const fbGet=async(path)=>{
+  const r=await fetch(`${DB_URL}/${path}.json`);
+  if(!r.ok)throw new Error(`HTTP ${r.status}`);
+  return r.json();
+};
+const fbSet=async(path,data)=>{
+  const r=await fetch(`${DB_URL}/${path}.json`,{
+    method:'PUT',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(data)
+  });
+  if(!r.ok)throw new Error(`HTTP ${r.status}`);
+  return r.json();
+};
+const fbPatch=async(path,data)=>{
+  const r=await fetch(`${DB_URL}/${path}.json`,{
+    method:'PATCH',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(data)
+  });
+  if(!r.ok)throw new Error(`HTTP ${r.status}`);
+  return r.json();
+};
 
 const GROUPS=[
   {id:'A',name:'Grupo A',countries:[
@@ -348,35 +369,30 @@ function ensureData(){
 async function loadFromFirebase(){
   try{
     document.getElementById('loadingText').textContent='Cargando datos del álbum...';
-    const snap=await get(ref(db,'album'));
-    if(snap.exists()){
-      albumData=snap.val();
+    const data=await fbGet('album');
+    if(data){
+      albumData=data;
       ensureData();
-      console.log('✅ Datos cargados desde Firebase');
+      console.log('✅ Datos cargados desde Firebase REST');
     } else {
       console.log('📭 Base de datos vacía — inicializando...');
       initEmpty();
-      await set(ref(db,'album'),albumData);
-      console.log('✅ Datos iniciales guardados en Firebase');
+      await fbSet('album',albumData);
     }
     setSyncStatus('online','🔥 Guardado en Firebase');
     document.getElementById('loadingScreen').style.display='none';
     renderAll();
-    // Escuchar cambios en tiempo real (sin sobreescribir si somos nosotros los que escribimos)
-    onValue(ref(db,'album'),(s)=>{
-      if(s.exists()){
-        albumData=s.val();
-        ensureData();
-        refreshAllCards();
-        updateStats();
-      }
-    });
   }catch(e){
-    console.error('❌ Error Firebase:',e);
+    console.error('❌ Error Firebase REST:',e);
     setSyncStatus('offline','❌ Sin conexión — revisa reglas Firebase');
     document.getElementById('loadingScreen').style.display='none';
-    initEmpty();renderAll();
-    showToast('⚠️ Sin conexión — ve a Firebase y publica las reglas true/true');
+    // Intentar cargar desde localStorage como respaldo
+    try{
+      const local=localStorage.getItem('album2026_backup');
+      if(local){albumData=JSON.parse(local);ensureData();showToast('⚠️ Cargado desde respaldo local');}
+      else initEmpty();
+    }catch{initEmpty();}
+    renderAll();
   }
 }
 
@@ -384,17 +400,21 @@ async function saveSticker(cid,num){
   try{
     setSyncStatus('syncing','⏳ Guardando...');
     const dataToSave={
-      state: albumData[cid][num].state||0,
-      name: albumData[cid][num].name||'',
-      qty: albumData[cid][num].qty||0
+      state:albumData[cid][num].state||0,
+      name:albumData[cid][num].name||'',
+      qty:albumData[cid][num].qty||0
     };
-    await set(ref(db,`album/${cid}/${num}`),dataToSave);
+    await fbSet(`album/${cid}/${num}`,dataToSave);
+    // Guardar respaldo local
+    try{localStorage.setItem('album2026_backup',JSON.stringify(albumData));}catch{}
     setSyncStatus('online','✅ Guardado en Firebase');
     console.log(`💾 Guardado: ${cid} #${num}`,dataToSave);
   }catch(e){
     setSyncStatus('offline','❌ Error al guardar');
     console.error('Error guardando:',e);
-    showToast('❌ Error al guardar. Revisa tu conexión a internet.');
+    // Guardar en local como respaldo
+    try{localStorage.setItem('album2026_backup',JSON.stringify(albumData));}catch{}
+    showToast('⚠️ Sin internet — guardado localmente');
   }
 }
 
@@ -598,8 +618,12 @@ window.loadFile=async function(e){
   const file=e.target.files[0];if(!file)return;
   const r=new FileReader();
   r.onload=async function(ev){
-    try{const p=JSON.parse(ev.target.result);albumData=p.data||p;ensureData();await set(ref(db,'album'),albumData);renderAll();showToast('📂 Importado y guardado');}
-    catch{showToast('❌ Error al importar');}
+    try{
+      const p=JSON.parse(ev.target.result);albumData=p.data||p;ensureData();
+      await fbSet('album',albumData);
+      try{localStorage.setItem('album2026_backup',JSON.stringify(albumData));}catch{}
+      renderAll();showToast('📂 Importado y guardado');
+    }catch{showToast('❌ Error al importar');}
   };
   r.readAsText(file);e.target.value='';
 };
