@@ -54,16 +54,16 @@
   .c-count{font-size:.73rem;font-weight:700;color:var(--gold);min-width:30px;text-align:right;}
   .toggle-arrow{font-size:.68rem;color:var(--muted);transition:transform .2s;}
   .country-card.closed .toggle-arrow{transform:rotate(180deg);}
-  .stickers-panel{display:grid;padding:9px;grid-template-columns:repeat(4,1fr);gap:6px;}
+  .stickers-panel{display:grid;padding:9px;grid-template-columns:repeat(3,1fr);gap:8px;}
   .country-card.closed .stickers-panel{display:none;}
-  .sticker{background:var(--card2);border:2px solid rgba(255,255,255,.08);border-radius:9px;padding:6px 4px 4px;text-align:center;cursor:pointer;transition:all .15s;position:relative;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px;overflow:visible;}
+  .sticker{background:var(--card2);border:2px solid rgba(255,255,255,.08);border-radius:9px;padding:8px 6px 6px;text-align:center;cursor:pointer;transition:all .15s;position:relative;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:3px;overflow:visible;}
   .sticker:hover{transform:scale(1.04);border-color:var(--gold);}
   .sticker.have{background:rgba(0,230,118,.12);border-color:rgba(0,230,118,.5);}
   .sticker.repeated{background:rgba(255,109,0,.12);border-color:rgba(255,109,0,.5);}
   .sticker.special{background:rgba(255,215,0,.06);border-color:rgba(255,215,0,.3);}
   .sticker-num{font-size:.62rem;color:var(--muted);font-weight:700;line-height:1;}
-  .sticker-name{font-size:.55rem;color:var(--text);font-weight:600;line-height:1.2;text-align:center;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 2px;flex:1;}
-  .sticker-icon{font-size:1.1rem;line-height:1;}
+  .sticker-name{font-size:.65rem;color:var(--text);font-weight:600;line-height:1.2;text-align:center;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 3px;flex:1;}
+  .sticker-icon{font-size:1.3rem;line-height:1;}
   .rep-badge{position:absolute;top:-6px;right:-6px;background:var(--orange);color:#fff;border-radius:999px;font-size:.48rem;font-weight:900;min-width:17px;height:17px;display:none;align-items:center;justify-content:center;border:2px solid var(--dark);z-index:2;}
   .sticker.repeated .rep-badge{display:flex;}
   .sticker-actions{width:100%;display:flex;justify-content:center;margin-top:2px;}
@@ -126,7 +126,7 @@
   .export-bar button{background:var(--card2);border:1.5px solid rgba(255,215,0,.25);border-radius:999px;color:var(--text);font-family:'Nunito';font-weight:700;font-size:.78rem;padding:7px 14px;cursor:pointer;transition:all .2s;}
   .export-bar button:hover{background:var(--gold);color:#000;border-color:var(--gold);}
   .group-section.hidden-group{display:none;}
-  @media(max-width:480px){.countries{grid-template-columns:1fr;padding:8px;}.stickers-panel{grid-template-columns:repeat(4,1fr);}.group-header{top:102px;}}
+  @media(max-width:480px){.countries{grid-template-columns:1fr;padding:8px;}.stickers-panel{grid-template-columns:repeat(3,1fr);gap:6px;}.group-header{top:102px;}}
 </style>
 </head>
 <body>
@@ -567,6 +567,8 @@ function updateCountryCard(cid){
 function refreshAllCards(){GROUPS.forEach(g=>g.countries.forEach(c=>{updateCountryCard(c.id);for(let i=1;i<=STICKERS_PER;i++)updateStickerEl(c.id,i);}));}
 
 window.cycleSticker=async function(cid,num){
+  if(!albumData[cid])albumData[cid]={};
+  if(!albumData[cid][num]){const c=getAllCountries().find(x=>x.id===cid);albumData[cid][num]={state:0,name:(c?.players[num-1])||'',qty:0};}
   const d=albumData[cid][num];
   const prev=d.qty??0;
   d.qty=prev===0?1:0;
