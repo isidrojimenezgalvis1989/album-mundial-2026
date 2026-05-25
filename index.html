@@ -9,7 +9,7 @@
   :root {
     --gold: #FFD700; --gold2: #FFA500; --dark: #0a0a1a; --card: #13132a;
     --card2: #1a1a35; --green: #00e676; --red: #ff1744; --blue: #2979ff;
-    --text: #e8e8f0; --muted: #8888aa; --radius: 14px;
+    --orange: #FF6D00; --text: #e8e8f0; --muted: #8888aa; --radius: 14px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -20,42 +20,40 @@
   }
   header {
     background: linear-gradient(135deg, #0a0a1a 0%, #1a1a35 50%, #0a0a1a 100%);
-    border-bottom: 3px solid var(--gold); padding: 18px 20px 14px;
+    border-bottom: 3px solid var(--gold); padding: 14px 20px 10px;
     text-align: center; position: sticky; top: 0; z-index: 100;
     box-shadow: 0 4px 30px rgba(255,215,0,0.15);
   }
   header h1 {
-    font-family: 'Bebas Neue', cursive; font-size: clamp(1.8rem, 6vw, 3rem);
+    font-family: 'Bebas Neue', cursive; font-size: clamp(1.6rem, 5vw, 2.8rem);
     background: linear-gradient(90deg, var(--gold), #fff, var(--gold2));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     letter-spacing: 2px; line-height: 1;
   }
-  header p { font-size: 0.78rem; color: var(--muted); margin-top: 3px; }
   .sync-status {
     display: inline-flex; align-items: center; gap: 5px;
-    font-size: 0.72rem; margin-top: 4px;
-    padding: 3px 10px; border-radius: 999px;
-    background: rgba(0,230,118,0.1); border: 1px solid rgba(0,230,118,0.2);
-    color: var(--green);
+    font-size: 0.72rem; margin-top: 4px; padding: 3px 10px;
+    border-radius: 999px; background: rgba(0,230,118,0.1);
+    border: 1px solid rgba(0,230,118,0.2); color: var(--green);
   }
   .sync-status.offline { background: rgba(255,23,68,0.1); border-color: rgba(255,23,68,0.2); color: var(--red); }
   .sync-status.syncing { background: rgba(255,215,0,0.1); border-color: rgba(255,215,0,0.2); color: var(--gold); }
   .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
   .stats-bar {
-    display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
-    padding: 14px 16px; background: var(--card);
+    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+    padding: 12px 16px; background: var(--card);
     border-bottom: 1px solid rgba(255,215,0,0.12);
   }
   .stat-pill {
     background: var(--card2); border: 1px solid rgba(255,215,0,0.2);
-    border-radius: 999px; padding: 6px 16px; font-size: 0.82rem;
-    display: flex; align-items: center; gap: 6px;
+    border-radius: 999px; padding: 5px 14px; font-size: 0.8rem;
+    display: flex; align-items: center; gap: 5px;
   }
-  .stat-pill span { font-weight: 900; font-size: 1rem; }
+  .stat-pill span { font-weight: 900; font-size: 0.95rem; }
   .s-total { color: var(--gold); } .s-have { color: var(--green); }
-  .s-miss { color: var(--red); } .s-pct { color: var(--blue); }
+  .s-miss { color: var(--red); } .s-rep { color: var(--orange); } .s-pct { color: var(--blue); }
   .controls {
-    padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 10px;
+    padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 10px;
     background: var(--dark); border-bottom: 1px solid rgba(255,255,255,0.05);
   }
   .search-wrap { flex: 1; min-width: 200px; position: relative; }
@@ -69,94 +67,131 @@
   .filter-btn {
     background: var(--card); border: 1.5px solid rgba(255,255,255,0.12);
     border-radius: 999px; color: var(--text); font-family: 'Nunito', sans-serif;
-    font-size: 0.82rem; font-weight: 700; padding: 8px 16px; cursor: pointer; transition: all 0.2s;
+    font-size: 0.8rem; font-weight: 700; padding: 7px 14px; cursor: pointer; transition: all 0.2s;
   }
   .filter-btn.active, .filter-btn:hover { background: var(--gold); color: #000; border-color: var(--gold); }
+
+  /* GRUPOS */
+  .group-section { margin: 0; }
+  .group-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px; background: rgba(255,215,0,0.06);
+    border-top: 2px solid rgba(255,215,0,0.2);
+    border-bottom: 1px solid rgba(255,215,0,0.1);
+    position: sticky; top: 88px; z-index: 50;
+  }
+  .group-badge {
+    font-family: 'Bebas Neue'; font-size: 1.4rem; color: var(--gold);
+    background: rgba(255,215,0,0.12); border: 2px solid var(--gold);
+    border-radius: 8px; padding: 2px 12px; min-width: 52px; text-align: center;
+  }
+  .group-title { font-size: 0.85rem; color: var(--muted); }
+  .group-title strong { color: var(--text); font-size: 0.9rem; }
+  .group-stats { margin-left: auto; font-size: 0.78rem; color: var(--muted); }
+
   .countries {
-    padding: 16px; display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;
+    padding: 12px 16px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 12px;
   }
   .country-card {
     background: var(--card); border-radius: var(--radius);
-    border: 1.5px solid rgba(255,255,255,0.07); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;
+    border: 1.5px solid rgba(255,255,255,0.07); overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
   }
   .country-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
   .country-card.complete { border-color: rgba(0,230,118,0.4); }
   .country-card.hidden { display: none; }
   .country-header {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 14px; background: var(--card2); cursor: pointer; user-select: none;
+    padding: 11px 13px; background: var(--card2); cursor: pointer; user-select: none;
   }
   .country-header:hover { background: rgba(255,215,0,0.06); }
-  .country-left { display: flex; align-items: center; gap: 10px; }
-  .country-flag { font-size: 1.6rem; line-height: 1; }
-  .country-info h3 { font-size: 0.95rem; font-weight: 900; letter-spacing: 0.5px; }
-  .country-info .c-sub { font-size: 0.72rem; color: var(--muted); margin-top: 1px; }
-  .country-right { display: flex; align-items: center; gap: 8px; }
-  .mini-bar-wrap { width: 60px; height: 6px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; }
+  .country-left { display: flex; align-items: center; gap: 9px; }
+  .country-flag { font-size: 1.5rem; line-height: 1; }
+  .country-info h3 { font-size: 0.9rem; font-weight: 900; letter-spacing: 0.5px; }
+  .country-info .c-sub { font-size: 0.7rem; color: var(--muted); margin-top: 1px; }
+  .country-right { display: flex; align-items: center; gap: 7px; }
+  .mini-bar-wrap { width: 55px; height: 5px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; }
   .mini-bar { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--green), #00bcd4); transition: width 0.5s; }
-  .c-count { font-size: 0.78rem; font-weight: 700; color: var(--gold); min-width: 36px; text-align: right; }
+  .c-count { font-size: 0.75rem; font-weight: 700; color: var(--gold); min-width: 32px; text-align: right; }
   .toggle-arrow { font-size: 0.7rem; color: var(--muted); transition: transform 0.2s; }
   .country-card.open .toggle-arrow { transform: rotate(180deg); }
+
+  /* STICKERS */
   .stickers-panel {
-    display: none; padding: 12px;
-    grid-template-columns: repeat(5, 1fr); gap: 8px;
+    display: none; padding: 10px;
+    grid-template-columns: repeat(5, 1fr); gap: 7px;
   }
   .country-card.open .stickers-panel { display: grid; }
   .sticker {
     background: var(--card2); border: 2px solid rgba(255,255,255,0.08);
-    border-radius: 10px; padding: 8px 4px; text-align: center; cursor: pointer;
-    transition: all 0.15s; position: relative; min-height: 72px;
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+    border-radius: 9px; padding: 7px 3px; text-align: center; cursor: pointer;
+    transition: all 0.15s; position: relative; min-height: 78px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
   }
   .sticker:hover { transform: scale(1.06); border-color: var(--gold); }
   .sticker.have { background: rgba(0,230,118,0.12); border-color: rgba(0,230,118,0.5); }
-  .sticker.repeated { background: rgba(255,152,0,0.12); border-color: rgba(255,152,0,0.5); }
-  .sticker-num { font-size: 0.65rem; color: var(--muted); font-weight: 700; }
+  .sticker.repeated { background: rgba(255,109,0,0.12); border-color: rgba(255,109,0,0.5); }
+  .sticker-num { font-size: 0.62rem; color: var(--muted); font-weight: 700; }
   .sticker-name {
-    font-size: 0.58rem; color: var(--text); font-weight: 600;
+    font-size: 0.55rem; color: var(--text); font-weight: 600;
     line-height: 1.2; text-align: center; width: 100%;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
-  .sticker-icon { font-size: 1.1rem; }
-  .sticker-badge {
-    position: absolute; top: -5px; right: -5px; background: var(--gold2); color: #000;
-    border-radius: 999px; font-size: 0.55rem; font-weight: 900;
-    min-width: 16px; height: 16px; display: none; align-items: center; justify-content: center;
+  .sticker-icon { font-size: 1rem; }
+  .rep-badge {
+    position: absolute; top: -6px; right: -6px;
+    background: var(--orange); color: #fff;
+    border-radius: 999px; font-size: 0.5rem; font-weight: 900;
+    min-width: 18px; height: 18px; display: none;
+    align-items: center; justify-content: center;
+    border: 2px solid var(--dark);
   }
-  .sticker.repeated .sticker-badge { display: flex; }
-  .sticker-actions { display: flex; gap: 4px; margin-top: 2px; }
+  .sticker.repeated .rep-badge { display: flex; }
+  .sticker-actions {
+    display: flex; gap: 3px; margin-top: 2px;
+  }
   .sticker-actions button {
-    background: transparent; border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 6px; color: var(--muted); font-size: 0.6rem;
-    padding: 2px 5px; cursor: pointer; transition: all 0.15s; font-family: 'Nunito'; font-weight: 700;
+    background: transparent; border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 5px; color: var(--muted); font-size: 0.55rem;
+    padding: 2px 4px; cursor: pointer; transition: all 0.15s;
+    font-family: 'Nunito'; font-weight: 700;
   }
+  .sticker-actions button:hover { background: rgba(255,215,0,0.15); color: var(--gold); }
+
+  /* LEGEND */
   .legend {
-    display: flex; gap: 12px; flex-wrap: wrap; padding: 10px 16px;
-    font-size: 0.75rem; color: var(--muted); border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex; gap: 12px; flex-wrap: wrap; padding: 8px 16px;
+    font-size: 0.73rem; color: var(--muted);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    background: var(--dark);
   }
   .legend-item { display: flex; align-items: center; gap: 5px; }
   .legend-dot { width: 10px; height: 10px; border-radius: 4px; }
   .ld-have { background: rgba(0,230,118,0.5); border: 1px solid var(--green); }
-  .ld-rep { background: rgba(255,152,0,0.5); border: 1px solid var(--gold2); }
+  .ld-rep { background: rgba(255,109,0,0.5); border: 1px solid var(--orange); }
   .ld-miss { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); }
+
+  /* MODAL NOMBRE */
   .modal-overlay {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75);
     z-index: 200; align-items: center; justify-content: center;
   }
   .modal-overlay.show { display: flex; }
   .modal {
     background: var(--card); border: 2px solid var(--gold); border-radius: 18px;
-    padding: 24px 20px; width: 90%; max-width: 340px; box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    padding: 22px 20px; width: 92%; max-width: 360px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
   }
-  .modal h3 { font-family: 'Bebas Neue'; font-size: 1.3rem; color: var(--gold); margin-bottom: 14px; }
-  .modal label { font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 4px; }
-  .modal input {
+  .modal h3 { font-family: 'Bebas Neue'; font-size: 1.3rem; color: var(--gold); margin-bottom: 12px; }
+  .modal label { font-size: 0.78rem; color: var(--muted); display: block; margin-bottom: 4px; }
+  .modal input, .modal select {
     width: 100%; background: var(--card2); border: 1.5px solid rgba(255,215,0,0.3);
     border-radius: 10px; color: var(--text); font-family: 'Nunito'; font-size: 0.9rem;
-    padding: 9px 12px; outline: none; margin-bottom: 14px;
+    padding: 9px 12px; outline: none; margin-bottom: 12px;
   }
-  .modal input:focus { border-color: var(--gold); }
+  .modal input:focus, .modal select:focus { border-color: var(--gold); }
+  .modal select option { background: var(--card2); }
   .modal-btns { display: flex; gap: 8px; }
   .modal-btns button {
     flex: 1; padding: 10px; border-radius: 10px; border: none;
@@ -164,14 +199,18 @@
   }
   .btn-save { background: var(--gold); color: #000; }
   .btn-cancel { background: var(--card2); color: var(--text); border: 1px solid rgba(255,255,255,0.1); }
+
+  /* TOAST */
   .toast {
     position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
     background: var(--card2); border: 1px solid var(--gold); border-radius: 999px;
     padding: 10px 20px; font-size: 0.85rem; font-weight: 700;
     box-shadow: 0 4px 20px rgba(0,0,0,0.4); z-index: 300; opacity: 0;
-    transition: opacity 0.3s; white-space: nowrap;
+    transition: opacity 0.3s; white-space: nowrap; pointer-events: none;
   }
   .toast.show { opacity: 1; }
+
+  /* LOADING */
   .loading-screen {
     position: fixed; inset: 0; background: var(--dark);
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -184,6 +223,7 @@
     border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
+
   .export-bar {
     padding: 12px 16px; display: flex; gap: 8px; flex-wrap: wrap;
     border-top: 1px solid rgba(255,215,0,0.12); background: var(--card);
@@ -194,15 +234,17 @@
     font-size: 0.8rem; padding: 8px 16px; cursor: pointer; transition: all 0.2s;
   }
   .export-bar button:hover { background: var(--gold); color: #000; border-color: var(--gold); }
+  .group-section.hidden-group { display: none; }
+
   @media (max-width: 480px) {
-    .countries { grid-template-columns: 1fr; }
+    .countries { grid-template-columns: 1fr; padding: 10px; }
     .stickers-panel { grid-template-columns: repeat(4, 1fr); }
+    .group-header { top: 76px; }
   }
 </style>
 </head>
 <body>
 
-<!-- LOADING -->
 <div class="loading-screen" id="loadingScreen">
   <div class="spinner"></div>
   <h2>⚽ ÁLBUM MUNDIAL 2026</h2>
@@ -211,19 +253,17 @@
 
 <header>
   <h1>⚽ ÁLBUM MUNDIAL 2026 — PANINI</h1>
-  <div>
-    <div class="sync-status syncing" id="syncStatus">
-      <div class="dot"></div> <span id="syncText">Conectando...</span>
-    </div>
+  <div class="sync-status syncing" id="syncStatus">
+    <div class="dot"></div> <span id="syncText">Conectando...</span>
   </div>
 </header>
 
-<div class="stats-bar" id="statsBar">
+<div class="stats-bar">
   <div class="stat-pill">📋 Total: <span class="s-total" id="sTotal">0</span></div>
   <div class="stat-pill">✅ Tengo: <span class="s-have" id="sHave">0</span></div>
   <div class="stat-pill">❌ Faltan: <span class="s-miss" id="sMiss">0</span></div>
   <div class="stat-pill">🔁 Repetidas: <span class="s-rep" id="sRep">0</span></div>
-  <div class="stat-pill">📊 Completado: <span class="s-pct" id="sPct">0%</span></div>
+  <div class="stat-pill">📊 Listo: <span class="s-pct" id="sPct">0%</span></div>
 </div>
 
 <div class="controls">
@@ -241,21 +281,37 @@
   <div class="legend-item"><div class="legend-dot ld-have"></div> Tengo</div>
   <div class="legend-item"><div class="legend-dot ld-rep"></div> Repetida</div>
   <div class="legend-item"><div class="legend-dot ld-miss"></div> Falta</div>
-  <p style="margin-left:auto;font-size:0.7rem">Clic en lámina: falta → tengo → repetida</p>
+  <span style="margin-left:auto;font-size:0.68rem">Clic: falta→tengo→repetida | ✏️ editar nombre y cantidad</span>
 </div>
 
-<div class="countries" id="countriesGrid"></div>
+<div id="mainContent"></div>
 
 <div class="export-bar">
   <button onclick="exportData()">💾 Exportar backup</button>
   <button onclick="importData()">📂 Importar backup</button>
 </div>
 
+<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
-    <h3>✏️ NOMBRE DEL JUGADOR</h3>
+    <h3>✏️ EDITAR LÁMINA</h3>
     <label>País: <strong id="modalCountry"></strong> · Lámina #<strong id="modalNum"></strong></label>
+    <label>Nombre del jugador:</label>
     <input type="text" id="modalInput" placeholder="Ej: Lionel Messi" maxlength="30">
+    <label>¿Cuántas veces se repite?</label>
+    <select id="modalRep">
+      <option value="0">No la tengo</option>
+      <option value="1">La tengo (×1)</option>
+      <option value="2">Repetida ×2</option>
+      <option value="3">Repetida ×3</option>
+      <option value="4">Repetida ×4</option>
+      <option value="5">Repetida ×5</option>
+      <option value="6">Repetida ×6</option>
+      <option value="7">Repetida ×7</option>
+      <option value="8">Repetida ×8</option>
+      <option value="9">Repetida ×9</option>
+      <option value="10">Repetida ×10</option>
+    </select>
     <div class="modal-btns">
       <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
       <button class="btn-save" onclick="saveName()">Guardar</button>
@@ -266,12 +322,10 @@
 <div class="toast" id="toast"></div>
 <input type="file" id="fileInput" accept=".json" style="display:none" onchange="loadFile(event)">
 
-<!-- FIREBASE SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, set, get, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-// ===== FIREBASE CONFIG =====
 const firebaseConfig = {
   apiKey: "AIzaSyBSVPx8paHMLISxQGWXnd1l5PEBEjfPJNk",
   authDomain: "album-mundial-2026-efab9.firebaseapp.com",
@@ -279,176 +333,230 @@ const firebaseConfig = {
   projectId: "album-mundial-2026-efab9",
   storageBucket: "album-mundial-2026-efab9.firebasestorage.app",
   messagingSenderId: "996293988580",
-  appId: "1:996293988580:web:1971f429fe4f08d2931cf1",
-  measurementId: "G-HNBTHWYTTR"
+  appId: "1:996293988580:web:1971f429fe4f08d2931cf1"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// ===== PAÍSES =====
-const COUNTRIES = [
-  { id: 'usa', name: 'Estados Unidos', flag: '🇺🇸', group: 'A' },
-  { id: 'canada', name: 'Canadá', flag: '🇨🇦', group: 'A' },
-  { id: 'mexico', name: 'México', flag: '🇲🇽', group: 'A' },
-  { id: 'colombia', name: 'Colombia', flag: '🇨🇴', group: 'B' },
-  { id: 'ecuador', name: 'Ecuador', flag: '🇪🇨', group: 'B' },
-  { id: 'venezuela', name: 'Venezuela', flag: '🇻🇪', group: 'B' },
-  { id: 'argentina', name: 'Argentina', flag: '🇦🇷', group: 'C' },
-  { id: 'chile', name: 'Chile', flag: '🇨🇱', group: 'C' },
-  { id: 'peru', name: 'Perú', flag: '🇵🇪', group: 'C' },
-  { id: 'brasil', name: 'Brasil', flag: '🇧🇷', group: 'D' },
-  { id: 'uruguay', name: 'Uruguay', flag: '🇺🇾', group: 'D' },
-  { id: 'paraguay', name: 'Paraguay', flag: '🇵🇾', group: 'D' },
-  { id: 'espana', name: 'España', flag: '🇪🇸', group: 'E' },
-  { id: 'portugal', name: 'Portugal', flag: '🇵🇹', group: 'E' },
-  { id: 'francia', name: 'Francia', flag: '🇫🇷', group: 'E' },
-  { id: 'alemania', name: 'Alemania', flag: '🇩🇪', group: 'F' },
-  { id: 'england', name: 'Inglaterra', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', group: 'F' },
-  { id: 'holanda', name: 'Países Bajos', flag: '🇳🇱', group: 'F' },
-  { id: 'belgica', name: 'Bélgica', flag: '🇧🇪', group: 'G' },
-  { id: 'suiza', name: 'Suiza', flag: '🇨🇭', group: 'G' },
-  { id: 'croacia', name: 'Croacia', flag: '🇭🇷', group: 'G' },
-  { id: 'italia', name: 'Italia', flag: '🇮🇹', group: 'H' },
-  { id: 'austria', name: 'Austria', flag: '🇦🇹', group: 'H' },
-  { id: 'escocia', name: 'Escocia', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', group: 'H' },
-  { id: 'marruecos', name: 'Marruecos', flag: '🇲🇦', group: 'I' },
-  { id: 'senegal', name: 'Senegal', flag: '🇸🇳', group: 'I' },
-  { id: 'nigeria', name: 'Nigeria', flag: '🇳🇬', group: 'I' },
-  { id: 'camerun', name: 'Camerún', flag: '🇨🇲', group: 'J' },
-  { id: 'sudafrica', name: 'Sudáfrica', flag: '🇿🇦', group: 'J' },
-  { id: 'mali', name: 'Mali', flag: '🇲🇱', group: 'J' },
-  { id: 'japon', name: 'Japón', flag: '🇯🇵', group: 'K' },
-  { id: 'corea', name: 'Corea del Sur', flag: '🇰🇷', group: 'K' },
-  { id: 'iran', name: 'Irán', flag: '🇮🇷', group: 'K' },
-  { id: 'australia', name: 'Australia', flag: '🇦🇺', group: 'L' },
-  { id: 'arabia', name: 'Arabia Saudita', flag: '🇸🇦', group: 'L' },
-  { id: 'newzealand', name: 'Nueva Zelanda', flag: '🇳🇿', group: 'L' },
-  { id: 'dinamarca', name: 'Dinamarca', flag: '🇩🇰', group: 'M' },
-  { id: 'turquia', name: 'Turquía', flag: '🇹🇷', group: 'M' },
-  { id: 'serbia', name: 'Serbia', flag: '🇷🇸', group: 'M' },
-  { id: 'poland', name: 'Polonia', flag: '🇵🇱', group: 'N' },
-  { id: 'ukraine', name: 'Ucrania', flag: '🇺🇦', group: 'N' },
-  { id: 'slovakia', name: 'Eslovaquia', flag: '🇸🇰', group: 'N' },
-  { id: 'ghana', name: 'Ghana', flag: '🇬🇭', group: 'O' },
-  { id: 'cotedivoire', name: 'Costa de Marfil', flag: '🇨🇮', group: 'O' },
-  { id: 'egypt', name: 'Egipto', flag: '🇪🇬', group: 'O' },
-  { id: 'qatar', name: 'Catar', flag: '🇶🇦', group: 'P' },
-  { id: 'uae', name: 'Emiratos Árabes', flag: '🇦🇪', group: 'P' },
-  { id: 'cuba', name: 'Cuba', flag: '🇨🇺', group: 'P' },
+// ===== 48 PAÍSES OFICIALES CON GRUPOS REALES =====
+const GROUPS = [
+  {
+    id: 'A', name: 'Grupo A',
+    countries: [
+      { id: 'mexico', name: 'México', flag: '🇲🇽' },
+      { id: 'corea', name: 'Corea del Sur', flag: '🇰🇷' },
+      { id: 'sudafrica', name: 'Sudáfrica', flag: '🇿🇦' },
+      { id: 'chequia', name: 'Rep. Checa', flag: '🇨🇿' },
+    ]
+  },
+  {
+    id: 'B', name: 'Grupo B',
+    countries: [
+      { id: 'canada', name: 'Canadá', flag: '🇨🇦' },
+      { id: 'suiza', name: 'Suiza', flag: '🇨🇭' },
+      { id: 'qatar', name: 'Catar', flag: '🇶🇦' },
+      { id: 'bosnia', name: 'Bosnia y Herzegovina', flag: '🇧🇦' },
+    ]
+  },
+  {
+    id: 'C', name: 'Grupo C',
+    countries: [
+      { id: 'brasil', name: 'Brasil', flag: '🇧🇷' },
+      { id: 'marruecos', name: 'Marruecos', flag: '🇲🇦' },
+      { id: 'escocia', name: 'Escocia', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' },
+      { id: 'haiti', name: 'Haití', flag: '🇭🇹' },
+    ]
+  },
+  {
+    id: 'D', name: 'Grupo D',
+    countries: [
+      { id: 'usa', name: 'Estados Unidos', flag: '🇺🇸' },
+      { id: 'paraguay', name: 'Paraguay', flag: '🇵🇾' },
+      { id: 'australia', name: 'Australia', flag: '🇦🇺' },
+      { id: 'turquia', name: 'Turquía', flag: '🇹🇷' },
+    ]
+  },
+  {
+    id: 'E', name: 'Grupo E',
+    countries: [
+      { id: 'alemania', name: 'Alemania', flag: '🇩🇪' },
+      { id: 'ecuador', name: 'Ecuador', flag: '🇪🇨' },
+      { id: 'cotedivoire', name: 'Costa de Marfil', flag: '🇨🇮' },
+      { id: 'curazao', name: 'Curazao', flag: '🇨🇼' },
+    ]
+  },
+  {
+    id: 'F', name: 'Grupo F',
+    countries: [
+      { id: 'holanda', name: 'Países Bajos', flag: '🇳🇱' },
+      { id: 'japon', name: 'Japón', flag: '🇯🇵' },
+      { id: 'tunez', name: 'Túnez', flag: '🇹🇳' },
+      { id: 'suecia', name: 'Suecia', flag: '🇸🇪' },
+    ]
+  },
+  {
+    id: 'G', name: 'Grupo G',
+    countries: [
+      { id: 'belgica', name: 'Bélgica', flag: '🇧🇪' },
+      { id: 'iran', name: 'Irán', flag: '🇮🇷' },
+      { id: 'egipto', name: 'Egipto', flag: '🇪🇬' },
+      { id: 'newzealand', name: 'Nueva Zelanda', flag: '🇳🇿' },
+    ]
+  },
+  {
+    id: 'H', name: 'Grupo H',
+    countries: [
+      { id: 'espana', name: 'España', flag: '🇪🇸' },
+      { id: 'uruguay', name: 'Uruguay', flag: '🇺🇾' },
+      { id: 'arabia', name: 'Arabia Saudita', flag: '🇸🇦' },
+      { id: 'caboverde', name: 'Cabo Verde', flag: '🇨🇻' },
+    ]
+  },
+  {
+    id: 'I', name: 'Grupo I',
+    countries: [
+      { id: 'francia', name: 'Francia', flag: '🇫🇷' },
+      { id: 'senegal', name: 'Senegal', flag: '🇸🇳' },
+      { id: 'noruega', name: 'Noruega', flag: '🇳🇴' },
+      { id: 'irak', name: 'Irak', flag: '🇮🇶' },
+    ]
+  },
+  {
+    id: 'J', name: 'Grupo J',
+    countries: [
+      { id: 'argentina', name: 'Argentina', flag: '🇦🇷' },
+      { id: 'austria', name: 'Austria', flag: '🇦🇹' },
+      { id: 'argelia', name: 'Argelia', flag: '🇩🇿' },
+      { id: 'jordania', name: 'Jordania', flag: '🇯🇴' },
+    ]
+  },
+  {
+    id: 'K', name: 'Grupo K',
+    countries: [
+      { id: 'portugal', name: 'Portugal', flag: '🇵🇹' },
+      { id: 'colombia', name: 'Colombia', flag: '🇨🇴' },
+      { id: 'uzbekistan', name: 'Uzbekistán', flag: '🇺🇿' },
+      { id: 'rdcongo', name: 'RD Congo', flag: '🇨🇩' },
+    ]
+  },
+  {
+    id: 'L', name: 'Grupo L',
+    countries: [
+      { id: 'england', name: 'Inglaterra', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
+      { id: 'croacia', name: 'Croacia', flag: '🇭🇷' },
+      { id: 'ghana', name: 'Ghana', flag: '🇬🇭' },
+      { id: 'panama', name: 'Panamá', flag: '🇵🇦' },
+    ]
+  },
 ];
 
 const STICKERS_PER = 20;
 let albumData = {};
-let activeFilter = 'all';
 let editTarget = null;
+let activeFilter = 'all';
 
-// ===== SYNC STATUS =====
 function setSyncStatus(state, text) {
   const el = document.getElementById('syncStatus');
-  const tx = document.getElementById('syncText');
   el.className = 'sync-status ' + state;
-  tx.textContent = text;
+  document.getElementById('syncText').textContent = text;
 }
 
-// ===== INIT DATA =====
 function initEmpty() {
   albumData = {};
-  COUNTRIES.forEach(c => {
+  GROUPS.forEach(g => g.countries.forEach(c => {
     albumData[c.id] = {};
-    for (let i = 1; i <= STICKERS_PER; i++) {
-      albumData[c.id][i] = { state: 0, name: '' };
-    }
-  });
+    for (let i = 1; i <= STICKERS_PER; i++)
+      albumData[c.id][i] = { state: 0, name: '', qty: 0 };
+  }));
 }
 
 function ensureData() {
-  COUNTRIES.forEach(c => {
+  GROUPS.forEach(g => g.countries.forEach(c => {
     if (!albumData[c.id]) albumData[c.id] = {};
     for (let i = 1; i <= STICKERS_PER; i++) {
-      if (!albumData[c.id][i]) albumData[c.id][i] = { state: 0, name: '' };
+      if (!albumData[c.id][i]) albumData[c.id][i] = { state: 0, name: '', qty: 0 };
+      if (albumData[c.id][i].qty === undefined) albumData[c.id][i].qty = albumData[c.id][i].state === 2 ? 2 : albumData[c.id][i].state;
     }
-  });
+  }));
 }
 
-// ===== FIREBASE LOAD =====
 async function loadFromFirebase() {
   try {
-    const snapshot = await get(ref(db, 'album'));
-    if (snapshot.exists()) {
-      albumData = snapshot.val();
-      ensureData();
-    } else {
-      initEmpty();
-      await set(ref(db, 'album'), albumData);
-    }
+    const snap = await get(ref(db, 'album'));
+    if (snap.exists()) { albumData = snap.val(); ensureData(); }
+    else { initEmpty(); await set(ref(db, 'album'), albumData); }
     setSyncStatus('online', '🔥 Firebase conectado');
     document.getElementById('loadingScreen').style.display = 'none';
     renderAll();
-
-    // Escuchar cambios en tiempo real
-    onValue(ref(db, 'album'), (snap) => {
-      if (snap.exists()) {
-        albumData = snap.val();
-        ensureData();
-        renderAll();
-      }
+    onValue(ref(db, 'album'), (s) => {
+      if (s.exists()) { albumData = s.val(); ensureData(); refreshStats(); refreshAllCards(); }
     });
   } catch(e) {
     setSyncStatus('offline', '❌ Sin conexión');
     document.getElementById('loadingScreen').style.display = 'none';
-    initEmpty();
-    renderAll();
-    showToast('⚠️ Sin conexión a Firebase. Modo offline.');
+    initEmpty(); renderAll();
+    showToast('⚠️ Sin conexión. Datos no guardados.');
   }
 }
 
-// ===== SAVE TO FIREBASE =====
 async function saveSticker(cid, num) {
   try {
     setSyncStatus('syncing', '⏳ Guardando...');
     await set(ref(db, `album/${cid}/${num}`), albumData[cid][num]);
-    setSyncStatus('online', '✅ Guardado en Firebase');
-  } catch(e) {
-    setSyncStatus('offline', '❌ Error al guardar');
-    showToast('❌ Error al guardar. Revisa tu conexión.');
-  }
+    setSyncStatus('online', '✅ Guardado');
+  } catch(e) { setSyncStatus('offline', '❌ Error al guardar'); }
 }
 
-// ===== STATS =====
 function getCountryStats(cid) {
-  let have = 0, repeated = 0;
+  let have = 0, repeated = 0, repTotal = 0;
   for (let i = 1; i <= STICKERS_PER; i++) {
-    const s = albumData[cid]?.[i]?.state ?? 0;
-    if (s === 1) have++;
-    else if (s === 2) repeated++;
+    const d = albumData[cid]?.[i] ?? {};
+    const qty = d.qty ?? 0;
+    if (qty >= 1) have++;
+    if (qty >= 2) { repeated++; repTotal += qty - 1; }
   }
-  return { have, repeated };
+  return { have, repeated, repTotal };
 }
 
 function updateStats() {
-  let have = 0, repeated = 0;
-  const total = COUNTRIES.length * STICKERS_PER;
-  COUNTRIES.forEach(c => {
+  let have = 0, repTotal = 0;
+  const total = GROUPS.reduce((a, g) => a + g.countries.length, 0) * STICKERS_PER;
+  GROUPS.forEach(g => g.countries.forEach(c => {
     const s = getCountryStats(c.id);
-    have += s.have; repeated += s.repeated;
-  });
+    have += s.have; repTotal += s.repTotal;
+  }));
   document.getElementById('sTotal').textContent = total;
   document.getElementById('sHave').textContent = have;
   document.getElementById('sMiss').textContent = total - have;
-  document.getElementById('sRep').textContent = repeated;
+  document.getElementById('sRep').textContent = repTotal;
   document.getElementById('sPct').textContent = Math.round((have / total) * 100) + '%';
 }
 
-// ===== RENDER =====
 function renderAll() {
-  const grid = document.getElementById('countriesGrid');
-  grid.innerHTML = COUNTRIES.map(renderCountry).join('');
-  applyFilter();
+  const content = document.getElementById('mainContent');
+  content.innerHTML = GROUPS.map(renderGroup).join('');
   updateStats();
+  applyFilter();
 }
 
-function renderCountry(c) {
+function renderGroup(g) {
+  const allHave = g.countries.reduce((a, c) => a + getCountryStats(c.id).have, 0);
+  const total = g.countries.length * STICKERS_PER;
+  return `
+    <div class="group-section" id="gs-${g.id}">
+      <div class="group-header">
+        <div class="group-badge">GRP ${g.id}</div>
+        <div>
+          <div class="group-title"><strong>${g.countries.map(c=>c.name).join(' · ')}</strong></div>
+        </div>
+        <div class="group-stats">${allHave}/${total}</div>
+      </div>
+      <div class="countries">${g.countries.map(c => renderCountry(c, g.id)).join('')}</div>
+    </div>`;
+}
+
+function renderCountry(c, gid) {
   const stats = getCountryStats(c.id);
   const pct = Math.round((stats.have / STICKERS_PER) * 100);
   const isComplete = stats.have === STICKERS_PER;
@@ -461,7 +569,7 @@ function renderCountry(c) {
           <span class="country-flag">${c.flag}</span>
           <div class="country-info">
             <h3>${c.name}</h3>
-            <div class="c-sub">Grupo ${c.group} · ${stats.have}/${STICKERS_PER}${stats.repeated > 0 ? ' · ' + stats.repeated + ' rep.' : ''}</div>
+            <div class="c-sub">${stats.have}/${STICKERS_PER} láminas${stats.repTotal > 0 ? ' · ' + stats.repTotal + ' sobrantes' : ''}</div>
           </div>
         </div>
         <div class="country-right">
@@ -475,18 +583,19 @@ function renderCountry(c) {
 }
 
 function renderSticker(cid, num) {
-  const d = albumData[cid]?.[num] ?? { state: 0, name: '' };
-  const s = d.state;
-  const icon = s === 1 ? '✅' : s === 2 ? '🔁' : '⬜';
-  const cls = s === 1 ? 'have' : s === 2 ? 'repeated' : '';
+  const d = albumData[cid]?.[num] ?? { state: 0, name: '', qty: 0 };
+  const qty = d.qty ?? 0;
+  const icon = qty === 0 ? '⬜' : qty === 1 ? '✅' : '🔁';
+  const cls = qty === 0 ? '' : qty === 1 ? 'have' : 'repeated';
+  const badge = qty >= 2 ? `×${qty}` : '';
   return `
     <div class="sticker ${cls}" id="stk-${cid}-${num}" onclick="cycleSticker('${cid}',${num})">
-      <span class="sticker-badge">${s === 2 ? '×2' : ''}</span>
+      <span class="rep-badge">${badge}</span>
       <span class="sticker-num">#${num}</span>
       <span class="sticker-icon">${icon}</span>
-      <span class="sticker-name" title="${d.name || ''}">${d.name || '---'}</span>
+      <span class="sticker-name" title="${d.name||''}">${d.name||'---'}</span>
       <div class="sticker-actions" onclick="event.stopPropagation()">
-        <button onclick="openModal('${cid}',${num})">✏️</button>
+        <button onclick="openModal('${cid}',${num})" title="Editar">✏️</button>
       </div>
     </div>`;
 }
@@ -494,54 +603,66 @@ function renderSticker(cid, num) {
 function updateStickerEl(cid, num) {
   const el = document.getElementById(`stk-${cid}-${num}`);
   if (!el) return;
-  const d = albumData[cid]?.[num] ?? { state: 0, name: '' };
-  const s = d.state;
-  el.className = 'sticker ' + (s === 1 ? 'have' : s === 2 ? 'repeated' : '');
-  el.querySelector('.sticker-icon').textContent = s === 1 ? '✅' : s === 2 ? '🔁' : '⬜';
+  const d = albumData[cid]?.[num] ?? { qty: 0, name: '' };
+  const qty = d.qty ?? 0;
+  el.className = 'sticker ' + (qty === 0 ? '' : qty === 1 ? 'have' : 'repeated');
+  el.querySelector('.sticker-icon').textContent = qty === 0 ? '⬜' : qty === 1 ? '✅' : '🔁';
   el.querySelector('.sticker-name').textContent = d.name || '---';
-  const badge = el.querySelector('.sticker-badge');
-  badge.textContent = s === 2 ? '×2' : '';
-  badge.style.display = s === 2 ? 'flex' : 'none';
+  const badge = el.querySelector('.rep-badge');
+  badge.textContent = qty >= 2 ? `×${qty}` : '';
+  badge.style.display = qty >= 2 ? 'flex' : 'none';
 }
 
 function updateCountryCard(cid) {
-  const c = COUNTRIES.find(x => x.id === cid);
+  const c = GROUPS.flatMap(g=>g.countries).find(x=>x.id===cid);
+  if (!c) return;
   const stats = getCountryStats(cid);
   const pct = Math.round((stats.have / STICKERS_PER) * 100);
   const card = document.getElementById('cc-' + cid);
   if (!card) return;
   card.classList.toggle('complete', stats.have === STICKERS_PER);
   const sub = card.querySelector('.c-sub');
-  if (sub) sub.textContent = `Grupo ${c.group} · ${stats.have}/${STICKERS_PER}${stats.repeated > 0 ? ' · ' + stats.repeated + ' rep.' : ''}`;
+  if (sub) sub.textContent = `${stats.have}/${STICKERS_PER} láminas${stats.repTotal > 0 ? ' · ' + stats.repTotal + ' sobrantes' : ''}`;
   const bar = card.querySelector('.mini-bar');
   if (bar) bar.style.width = pct + '%';
   const cnt = card.querySelector('.c-count');
   if (cnt) cnt.textContent = pct + '%';
 }
 
-// ===== INTERACTIONS =====
+function refreshStats() { updateStats(); }
+function refreshAllCards() {
+  GROUPS.forEach(g => g.countries.forEach(c => {
+    updateCountryCard(c.id);
+    for (let i = 1; i <= STICKERS_PER; i++) updateStickerEl(c.id, i);
+  }));
+}
+
 window.cycleSticker = async function(cid, num) {
   const d = albumData[cid][num];
-  d.state = (d.state + 1) % 3;
+  const qty = d.qty ?? 0;
+  // Ciclo: 0 → 1 → 0
+  d.qty = qty === 0 ? 1 : 0;
+  d.state = d.qty >= 2 ? 2 : d.qty === 1 ? 1 : 0;
   updateStickerEl(cid, num);
   updateCountryCard(cid);
   updateStats();
-  const labels = ['Quitada ❌', 'Agregada ✅', 'Repetida 🔁'];
-  showToast(`#${num} ${COUNTRIES.find(c=>c.id===cid)?.name}: ${labels[d.state]}`);
+  const label = d.qty === 1 ? 'Agregada ✅' : 'Quitada ❌';
+  showToast(`#${num}: ${label} — usa ✏️ para marcar repetidas`);
   await saveSticker(cid, num);
 };
 
 window.toggleCountry = function(cid) {
-  document.getElementById('cc-' + cid)?.classList.toggle('open');
+  document.getElementById('cc-'+cid)?.classList.toggle('open');
 };
 
-// ===== MODAL =====
 window.openModal = function(cid, num) {
   editTarget = { cid, num };
-  const c = COUNTRIES.find(x => x.id === cid);
+  const c = GROUPS.flatMap(g=>g.countries).find(x=>x.id===cid);
   document.getElementById('modalCountry').textContent = c?.name || cid;
   document.getElementById('modalNum').textContent = num;
-  document.getElementById('modalInput').value = albumData[cid][num]?.name || '';
+  const d = albumData[cid][num];
+  document.getElementById('modalInput').value = d.name || '';
+  document.getElementById('modalRep').value = String(d.qty ?? 0);
   document.getElementById('modalOverlay').classList.add('show');
   setTimeout(() => document.getElementById('modalInput').focus(), 100);
 };
@@ -552,11 +673,16 @@ window.closeModal = function() {
 window.saveName = async function() {
   if (!editTarget) return;
   const { cid, num } = editTarget;
-  const val = document.getElementById('modalInput').value.trim();
-  albumData[cid][num].name = val;
+  const name = document.getElementById('modalInput').value.trim();
+  const qty = parseInt(document.getElementById('modalRep').value);
+  albumData[cid][num].name = name;
+  albumData[cid][num].qty = qty;
+  albumData[cid][num].state = qty >= 2 ? 2 : qty === 1 ? 1 : 0;
   updateStickerEl(cid, num);
+  updateCountryCard(cid);
+  updateStats();
   closeModal();
-  showToast(`Nombre guardado: ${val || '(vacío)'}`);
+  showToast(`Lámina #${num} guardada: ${name || '(sin nombre)'} ×${qty}`);
   await saveSticker(cid, num);
 };
 
@@ -568,49 +694,49 @@ document.getElementById('modalInput').addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeModal();
 });
 
-// ===== SEARCH & FILTER =====
-let activeFilterLocal = 'all';
-document.getElementById('searchInput').addEventListener('input', function() {
-  applyFilter();
-});
+document.getElementById('searchInput').addEventListener('input', applyFilter);
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', function() {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     this.classList.add('active');
-    activeFilterLocal = this.dataset.filter;
+    activeFilter = this.dataset.filter;
     applyFilter();
   });
 });
 
 function applyFilter() {
   const q = document.getElementById('searchInput').value.toLowerCase().trim();
-  COUNTRIES.forEach(c => {
-    const card = document.getElementById('cc-' + c.id);
-    if (!card) return;
-    const stats = getCountryStats(c.id);
-    let searchMatch = !q || c.name.toLowerCase().includes(q);
-    if (!searchMatch && q) {
-      for (let i = 1; i <= STICKERS_PER; i++) {
-        if ((albumData[c.id]?.[i]?.name || '').toLowerCase().includes(q)) {
-          searchMatch = true; break;
+  GROUPS.forEach(g => {
+    let groupVisible = false;
+    g.countries.forEach(c => {
+      const card = document.getElementById('cc-'+c.id);
+      if (!card) return;
+      const stats = getCountryStats(c.id);
+      let sm = !q || c.name.toLowerCase().includes(q);
+      if (!sm && q) {
+        for (let i = 1; i <= STICKERS_PER; i++) {
+          if ((albumData[c.id]?.[i]?.name||'').toLowerCase().includes(q)) { sm = true; break; }
         }
       }
-    }
-    let catMatch = true;
-    if (activeFilterLocal === 'complete') catMatch = stats.have === STICKERS_PER;
-    else if (activeFilterLocal === 'incomplete') catMatch = stats.have < STICKERS_PER;
-    else if (activeFilterLocal === 'started') catMatch = stats.have > 0 && stats.have < STICKERS_PER;
-    card.classList.toggle('hidden', !searchMatch || !catMatch);
-    if (q && searchMatch && !c.name.toLowerCase().includes(q)) card.classList.add('open');
+      let cm = true;
+      if (activeFilter === 'complete') cm = stats.have === STICKERS_PER;
+      else if (activeFilter === 'incomplete') cm = stats.have < STICKERS_PER;
+      else if (activeFilter === 'started') cm = stats.have > 0 && stats.have < STICKERS_PER;
+      const visible = sm && cm;
+      card.classList.toggle('hidden', !visible);
+      if (visible) groupVisible = true;
+      if (q && sm && !c.name.toLowerCase().includes(q)) card.classList.add('open');
+    });
+    const gs = document.getElementById('gs-'+g.id);
+    if (gs) gs.classList.toggle('hidden-group', !groupVisible);
   });
 }
 
-// ===== EXPORT/IMPORT =====
 window.exportData = function() {
-  const blob = new Blob([JSON.stringify({ version: 2, firebase: true, data: albumData, exported: new Date().toISOString() }, null, 2)], { type: 'application/json' });
+  const blob = new Blob([JSON.stringify({ version: 3, data: albumData, exported: new Date().toISOString() }, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `album_mundial_2026_backup_${new Date().toLocaleDateString('es').replace(/\//g,'-')}.json`;
+  a.download = `album_mundial_2026_${new Date().toLocaleDateString('es').replace(/\//g,'-')}.json`;
   a.click();
   showToast('💾 Backup exportado');
 };
@@ -620,28 +746,25 @@ window.loadFile = async function(e) {
   const r = new FileReader();
   r.onload = async function(ev) {
     try {
-      const parsed = JSON.parse(ev.target.result);
-      albumData = parsed.data || parsed;
+      const p = JSON.parse(ev.target.result);
+      albumData = p.data || p;
       ensureData();
       await set(ref(db, 'album'), albumData);
       renderAll();
       showToast('📂 Datos importados y guardados en Firebase');
     } catch { showToast('❌ Error al importar'); }
   };
-  r.readAsText(file);
-  e.target.value = '';
+  r.readAsText(file); e.target.value = '';
 };
 
-// ===== TOAST =====
 let toastTimer;
 window.showToast = function(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
 };
 
-// ===== START =====
 loadFromFirebase();
 </script>
 </body>
