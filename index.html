@@ -66,8 +66,8 @@
   .sticker-icon{font-size:1.3rem;line-height:1;}
   .rep-badge{position:absolute;top:-6px;right:-6px;background:var(--orange);color:#fff;border-radius:999px;font-size:.48rem;font-weight:900;min-width:17px;height:17px;display:none;align-items:center;justify-content:center;border:2px solid var(--dark);z-index:2;}
   .sticker.repeated .rep-badge{display:flex;}
-  .sticker-actions{width:100%;display:flex;justify-content:center;margin-top:2px;}
-  .sticker-actions button{background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.25);border-radius:5px;color:var(--gold);font-size:.58rem;padding:2px 6px;cursor:pointer;transition:all .15s;font-family:'Nunito';font-weight:700;width:100%;}
+  .sticker-actions{position:absolute;top:2px;right:2px;z-index:5;}
+  .sticker-actions button{background:rgba(30,30,60,.85);border:1px solid rgba(255,215,0,.3);border-radius:4px;color:var(--gold);font-size:.6rem;padding:1px 4px;cursor:pointer;transition:all .15s;font-family:'Nunito';font-weight:700;line-height:1.4;}
   .sticker-actions button:hover{background:var(--gold);color:#000;}
   .legend{display:flex;gap:10px;flex-wrap:wrap;padding:7px 14px;font-size:.7rem;color:var(--muted);border-top:1px solid rgba(255,255,255,.05);background:var(--dark);}
   .legend-item{display:flex;align-items:center;gap:4px;}
@@ -337,7 +337,7 @@ let activeFilter='all';
 
 function setSyncStatus(s,t){const el=document.getElementById('syncStatus');el.className='sync-status '+s;document.getElementById('syncText').textContent=t;}
 function getAllCountries(){return GROUPS.flatMap(g=>g.countries);}
-function getPlayerName(c,i){return albumData[c.id]?.[i]?.name||c.players[i-1]||'';}
+function getPlayerName(c,i){const d=getStickerData(c.id,i);return d?.name||c.players[i-1]||'';}
 
 function initEmpty(){
   albumData={};
@@ -351,17 +351,27 @@ function ensureData(){
   GROUPS.forEach(g=>g.countries.forEach(c=>{
     if(!albumData[c.id])albumData[c.id]={};
     for(let i=1;i<=STICKERS_PER;i++){
-      if(!albumData[c.id][i]){
-        // Solo crear si no existe
+      // Firebase devuelve claves como strings; buscar con clave string O entera
+      const existing=albumData[c.id][i]||albumData[c.id][String(i)];
+      if(!existing){
         albumData[c.id][i]={state:0,name:c.players[i-1]||'',qty:0};
       } else {
-        // Corregir qty si falta (migración de versiones anteriores)
-        if(albumData[c.id][i].qty===undefined||albumData[c.id][i].qty===null){
-          albumData[c.id][i].qty=albumData[c.id][i].state===2?2:albumData[c.id][i].state===1?1:0;
-        }
-        // Si el estado indica que tiene la lámina pero qty=0, corregir
-        if(albumData[c.id][i].state===1&&albumData[c.id][i].qty===0)albumData[c.id][i].qty=1;
-        if(albumData[c.id][i].state===2&&albumData[c.id][i].qty<2)albumData[c.id][i].qty=2;
+        // Normalizar siempre a clave entera y valores numéricos
+        const norm={
+          state:parseInt(existing.state)||0,
+          name:existing.name||c.players[i-1]||'',
+          qty:parseInt(existing.qty)||0
+        };
+        // Corregir qty si falta
+        if(norm.qty===0&&norm.state===1)norm.qty=1;
+        if(norm.qty<2&&norm.state===2)norm.qty=2;
+        // Si qty indica tenida pero state no lo refleja, corregir state
+        if(norm.qty>=2)norm.state=2;
+        else if(norm.qty===1)norm.state=1;
+        else norm.state=0;
+        albumData[c.id][i]=norm;
+        // Eliminar clave string duplicada si existe
+        if(albumData[c.id][String(i)]&&String(i)!==String(i+''))delete albumData[c.id][String(i)];
       }
     }
   }));
@@ -421,7 +431,11 @@ async function saveSticker(cid,num){
 
 function getCountryStats(cid){
   let have=0,repTotal=0;
-  for(let i=1;i<=STICKERS_PER;i++){const qty=albumData[cid]?.[i]?.qty??0;if(qty>=1)have++;if(qty>=2)repTotal+=qty-1;}
+  for(let i=1;i<=STICKERS_PER;i++){
+    const d=getStickerData(cid,i);
+    const qty=parseInt(d?.qty)||0;
+    if(qty>=1)have++;if(qty>=2)repTotal+=qty-1;
+  }
   return{have,repTotal};
 }
 
@@ -468,7 +482,7 @@ window.showReport=function(type){
       g.countries.forEach(c=>{
         const items=[];
         for(let i=1;i<=STICKERS_PER;i++){
-          const qty=albumData[c.id]?.[i]?.qty??0;
+          const qty=parseInt(getStickerData(c.id,i)?.qty)||0;
           const name=getPlayerName(c,i);
           if(type==='total'){items.push({i,name,qty,cls:'r-miss'});}
           else if(type==='have'&&qty>=1){items.push({i,name,qty,cls:'r-have'});}
@@ -524,8 +538,13 @@ function renderCountry(c){
   return`<div class="country-card ${isComplete?'complete':''}" id="cc-${c.id}"><div class="country-header" onclick="toggleCountry('${c.id}')"><div class="country-left"><span class="country-flag">${c.flag}</span><div class="country-info"><h3>${c.name}</h3><div class="c-sub">${stats.have}/${STICKERS_PER} láminas${stats.repTotal>0?' · '+stats.repTotal+' sobrantes':''}</div></div></div><div class="country-right"><div class="mini-bar-wrap"><div class="mini-bar" style="width:${pct}%"></div></div><div class="c-count">${pct}%</div><span class="toggle-arrow">▼</span></div></div><div class="stickers-panel" id="sp-${c.id}">${stk}</div></div>`;
 }
 function getStickerBaseIcon(num){if(num===1)return'🛡️';if(num===13)return'👥';return'👤';}
+function getStickerData(cid,num){
+  // Firebase returns keys as strings; handle both string and int keys
+  if(!albumData[cid])return null;
+  return albumData[cid][num]||albumData[cid][String(num)]||null;
+}
 function renderSticker(c,num){
-  const d=albumData[c.id]?.[num]??{qty:0,name:c.players[num-1]||''};
+  const d=getStickerData(c.id,num)||{qty:0,name:c.players[num-1]||''};
   const qty=d.qty??0;const base=getStickerBaseIcon(num);
   const icon=qty===0?base:qty===1?'✅':'🔁';
   const cls=qty===0?(num===1||num===13?'special':''):qty===1?'have':'repeated';
@@ -535,16 +554,16 @@ function renderSticker(c,num){
     <span class="rep-badge">${badge}</span>
     <span class="sticker-num">#${num}</span>
     <span class="sticker-icon">${icon}</span>
-    <span class="sticker-name" title="${dispName}">${dispName}</span>
+    <span class="sticker-name">${dispName}</span>
     <div class="sticker-actions">
-      <button onclick="event.stopPropagation();openModal('${c.id}',${num})">✏️ editar</button>
+      <button onclick="event.stopPropagation();openModal('${c.id}',${num})">✏️</button>
     </div>
   </div>`;
 }
 function updateStickerEl(cid,num){
   const el=document.getElementById(`stk-${cid}-${num}`);if(!el)return;
   const c=getAllCountries().find(x=>x.id===cid);
-  const d=albumData[cid]?.[num]??{qty:0,name:''};const qty=d.qty??0;const base=getStickerBaseIcon(num);
+  const d=getStickerData(cid,num)||{qty:0,name:''};const qty=parseInt(d.qty)||0;const base=getStickerBaseIcon(num);
   const icon=qty===0?base:qty===1?'✅':'🔁';
   const cls=qty===0?(num===1||num===13?'special':''):qty===1?'have':'repeated';
   el.className='sticker '+cls;
@@ -567,15 +586,27 @@ function updateCountryCard(cid){
 function refreshAllCards(){GROUPS.forEach(g=>g.countries.forEach(c=>{updateCountryCard(c.id);for(let i=1;i<=STICKERS_PER;i++)updateStickerEl(c.id,i);}));}
 
 window.cycleSticker=async function(cid,num){
+  // Garantizar que el país existe
   if(!albumData[cid])albumData[cid]={};
-  if(!albumData[cid][num]){const c=getAllCountries().find(x=>x.id===cid);albumData[cid][num]={state:0,name:(c?.players[num-1])||'',qty:0};}
-  const d=albumData[cid][num];
-  const prev=d.qty??0;
+  // Buscar la lámina con clave entera O string (Firebase devuelve strings)
+  let d=albumData[cid][num]||albumData[cid][String(num)];
+  if(!d){
+    const c=getAllCountries().find(x=>x.id===cid);
+    d={state:0,name:(c?.players[num-1])||'',qty:0};
+    albumData[cid][num]=d;
+  } else {
+    // Normalizar: asegurar que qty es número
+    d.qty=parseInt(d.qty)||0;
+    d.state=parseInt(d.state)||0;
+    // Apuntar al slot con clave entera para escritura consistente
+    albumData[cid][num]=d;
+  }
+  const prev=d.qty;
   d.qty=prev===0?1:0;
   d.state=d.qty>=2?2:d.qty===1?1:0;
   updateStickerEl(cid,num);updateCountryCard(cid);updateStats();
-  const n=d.name||'#'+num;
-  showToast(d.qty===1?`✅ Tenida: ${n}`:`❌ Quitada: ${n}`);
+  const n=d.name||('#'+num);
+  showToast(d.qty===1?('✅ Tenida: '+n):('❌ Quitada: '+n));
   await saveSticker(cid,num);
 };
 window.toggleCountry=function(cid){document.getElementById('cc-'+cid)?.classList.toggle('closed');};
